@@ -78,12 +78,12 @@ _CCSettings = {
                 "image/default_btn_pressed.png",
                 "cc.Texture2D"
             ],
-            "e851e89b-faa2-4484-bea6-5c01dd9f06e2": [
-                "image/default_btn_normal.png",
-                "cc.Texture2D"
-            ],
             "71561142-4c83-4933-afca-cb7a17f67053": [
                 "image/default_btn_disabled.png",
+                "cc.Texture2D"
+            ],
+            "e851e89b-faa2-4484-bea6-5c01dd9f06e2": [
+                "image/default_btn_normal.png",
                 "cc.Texture2D"
             ]
         }

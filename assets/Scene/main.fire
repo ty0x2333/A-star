@@ -836,7 +836,7 @@
     },
     "_enabled": true,
     "isAlignOnce": false,
-    "_alignFlags": 13,
+    "_alignFlags": 5,
     "_left": 0,
     "_right": 0,
     "_top": 0,

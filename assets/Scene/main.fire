@@ -1225,7 +1225,7 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "CreateByLabel",
+    "_name": "CreatedByLabel",
     "_objFlags": 0,
     "_opacity": 255,
     "_color": {
@@ -1246,7 +1246,7 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 59,
+      "width": 67,
       "height": 20
     },
     "_children": [],
@@ -1290,7 +1290,7 @@
     "_enableWrapText": true,
     "_N$file": null,
     "_isSystemFontUsed": true,
-    "_N$string": "create by",
+    "_N$string": "created by",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1,
     "_N$overflow": 0

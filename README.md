@@ -1,4 +1,5 @@
 # A star
-Cocos Creator 的 A* 算法组件.
+A\* search algorithm for Cocos Creator.
 
+a component for the TiledMap to add A star search algorithm support.:beers:
 

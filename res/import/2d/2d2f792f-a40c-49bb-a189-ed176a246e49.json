@@ -650,13 +650,13 @@
   },
   {
     "__type__": "cc.Node",
-    "_name": "CreateByLabel",
+    "_name": "CreatedByLabel",
     "_parent": {
       "__id__": 25
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 59,
+      "width": 67,
       "height": 20
     },
     "_position": {
@@ -677,7 +677,7 @@
     "_useOriginalSize": false,
     "_fontSize": 14,
     "_lineHeight": 20,
-    "_N$string": "create by",
+    "_N$string": "created by",
     "_N$horizontalAlign": 1,
     "_N$verticalAlign": 1
   },

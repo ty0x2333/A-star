@@ -50,28 +50,26 @@ cc.Class({
         this._player.setPosition(playerStartPosition);
         
         let self = this;
-        cc.eventManager.addListener({
-            event: cc.EventListener.TOUCH_ONE_BY_ONE,
-            onTouchBegan: function(touch, event) {
-                let touchLocation = touch.getLocation();
-                let location = self.node.convertToNodeSpaceAR(touchLocation);
-                let targetTilePosition = self._tilePosistion(location);
-                let tileLayerSize = self._layerFloor.getLayerSize();
-                if (targetTilePosition.x < 0 || targetTilePosition.x >= tileLayerSize.width || 
-                targetTilePosition.y < 0 || targetTilePosition.y >= tileLayerSize.height) {
-                    return true;
-                }
-                let playerPosition = self._player.getPosition();
-                cc.log('player position: ' + playerPosition);
-                let playerTilePosition = self._tilePosistion(playerPosition);
-                cc.log('player tile position: ' + playerTilePosition);
-                
-                self._move(playerTilePosition, targetTilePosition);
-                
-                self._debugDraw(targetTilePosition, cc.Color.RED);
-                
+        self._tiledMap.node.on(cc.Node.EventType.TOUCH_END, function (event) {
+            var touch = event.getTouches()[0];
+            let touchLocation = touch.getLocation();
+            let location = self.node.convertToNodeSpaceAR(touchLocation);
+            let targetTilePosition = self._tilePosistion(location);
+            let tileLayerSize = self._layerFloor.getLayerSize();
+            if (targetTilePosition.x < 0 || targetTilePosition.x >= tileLayerSize.width || 
+            targetTilePosition.y < 0 || targetTilePosition.y >= tileLayerSize.height) {
                 return true;
             }
+            let playerPosition = self._player.getPosition();
+            cc.log('player position: ' + playerPosition);
+            let playerTilePosition = self._tilePosistion(playerPosition);
+            cc.log('player tile position: ' + playerTilePosition);
+            
+            self._move(playerTilePosition, targetTilePosition);
+            
+            self._debugDraw(targetTilePosition, cc.Color.RED);
+            
+            return true;
         }, self.node);
     },
     

@@ -10,7 +10,7 @@ Here you can see the running effect:
 
 ## Dependencies
 
-- [Cocos Creator v1.1.0-rc1](http://forum.cocos.com/t/cocos-creator-1-1-0-beta-5-27-rc1/36633)
+- [Cocos Creator v1.2.0](http://www.cocoscreator.com/)
 
 
 ## LICENSE

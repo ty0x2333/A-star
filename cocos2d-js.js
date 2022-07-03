@@ -622,12 +622,12 @@
                     _rotationY: 0,
                     _scaleX: 1,
                     _scaleY: 1,
-                    _position: cc.p(0, 0),
+                    _position: cc.v2(0, 0),
                     _skewX: 0,
                     _skewY: 0,
                     _children: [],
                     _visible: true,
-                    _anchorPoint: cc.p(0, 0),
+                    _anchorPoint: cc.v2(0, 0),
                     _contentSize: cc.size(0, 0),
                     _parent: null,
                     _ignoreAnchorPointForPosition: false,
@@ -853,7 +853,7 @@
                     this._renderCmd.setDirtyFlag(_ccsg.Node._dirtyFlags.transformDirty);
                 },
                 getPosition: function() {
-                    return cc.p(this._position);
+                    return cc.v2(this._position);
                 },
                 getPositionX: function() {
                     return this._position.x;
@@ -886,7 +886,7 @@
                     }
                 },
                 getAnchorPoint: function() {
-                    return cc.p(this._anchorPoint);
+                    return cc.v2(this._anchorPoint);
                 },
                 setAnchorPoint: function(point, y) {
                     var locAnchorPoint = this._anchorPoint;
@@ -1669,7 +1669,7 @@
             _ccsg.Node.RenderCmd.prototype = {
                 constructor: _ccsg.Node.RenderCmd,
                 getAnchorPointInPoints: function() {
-                    return cc.p(this._anchorPointInPoints);
+                    return cc.v2(this._anchorPointInPoints);
                 },
                 getDisplayedColor: function() {
                     var tmpColor = this._displayedColor;
@@ -2140,7 +2140,7 @@
                         lblHeight = -logoHeight / 2 - 10;
                     }
                     var label = self._label = new cc.LabelTTF("Loading... 0%", "Arial", fontSize);
-                    label.setPosition(cc.pAdd(cc.visibleRect.center, cc.p(0, lblHeight)));
+                    label.setPosition(cc.pAdd(cc.visibleRect.center, cc.v2(0, lblHeight)));
                     label.setColor(cc.color(180, 180, 180));
                     bgLayer.addChild(this._label, 10);
                     return true;
@@ -2337,7 +2337,7 @@
                 ctor: function(start, end, v, stops) {
                     cc.LayerColor.prototype.ctor.call(this);
                     this._endColor = cc.color(0, 0, 0, 255);
-                    this._alongVector = cc.p(0, -1);
+                    this._alongVector = cc.v2(0, -1);
                     this._startOpacity = 255;
                     this._endOpacity = 255;
                     if (stops && stops instanceof Array) {
@@ -2364,7 +2364,7 @@
                 init: function(start, end, v, stops) {
                     start = start || cc.color(0, 0, 0, 255);
                     end = end || cc.color(0, 0, 0, 255);
-                    v = v || cc.p(0, -1);
+                    v = v || cc.v2(0, -1);
                     var _t = this;
                     var locEndColor = _t._endColor;
                     _t._startOpacity = start.a;
@@ -2448,7 +2448,7 @@
                     this._renderCmd.setDirtyFlag(_ccsg.Node._dirtyFlags.gradientDirty);
                 },
                 getVector: function() {
-                    return cc.p(this._alongVector.x, this._alongVector.y);
+                    return cc.v2(this._alongVector.x, this._alongVector.y);
                 },
                 isCompressedInterpolation: function() {
                     return this._compressedInterpolation;
@@ -2801,8 +2801,8 @@
                 cc.LayerGradient.CanvasRenderCmd = function(renderable) {
                     cc.LayerColor.CanvasRenderCmd.call(this, renderable);
                     this._needDraw = true;
-                    this._startPoint = cc.p(0, 0);
-                    this._endPoint = cc.p(0, 0);
+                    this._startPoint = cc.v2(0, 0);
+                    this._endPoint = cc.v2(0, 0);
                     this._startStopStr = null;
                     this._endStopStr = null;
                 };
@@ -2864,8 +2864,8 @@
                     var contentSize = node._contentSize;
                     var tWidth = .5 * contentSize.width, tHeight = .5 * contentSize.height;
                     this._dirtyFlag = this._dirtyFlag & _ccsg.Node._dirtyFlags.gradientDirty ^ this._dirtyFlag;
-                    var angle = cc.pAngleSigned(cc.p(0, -1), node._alongVector);
-                    var p1 = cc.pRotateByAngle(cc.p(0, -1), cc.p(0, 0), angle);
+                    var angle = cc.pAngleSigned(cc.v2(0, -1), node._alongVector);
+                    var p1 = cc.pRotateByAngle(cc.v2(0, -1), cc.v2(0, 0), angle);
                     var factor = Math.min(Math.abs(1 / p1.x), Math.abs(1 / p1.y));
                     this._startPoint.x = tWidth * (-p1.x * factor) + tWidth;
                     this._startPoint.y = tHeight * (p1.y * factor) - tHeight;
@@ -3029,25 +3029,25 @@
                         locVertices.push(new cc.Vertex2F(0, 0, locSquareVerticesAB, locVertex2FLen * i));
                         locColors.push(new cc.WebGLColor(0, 0, 0, 255, locSquareColorsAB, locColorLen * i));
                     }
-                    var angle = Math.PI + cc.pAngleSigned(cc.p(0, -1), node._alongVector), locAnchor = cc.p(contentSize.width / 2, contentSize.height / 2);
+                    var angle = Math.PI + cc.pAngleSigned(cc.v2(0, -1), node._alongVector), locAnchor = cc.v2(contentSize.width / 2, contentSize.height / 2);
                     var degrees = Math.round(cc.radiansToDegrees(angle));
                     var transMat = cc.affineTransformMake(1, 0, 0, 1, locAnchor.x, locAnchor.y);
                     transMat = cc.affineTransformRotate(transMat, angle);
                     var a, b;
                     if (degrees < 90) {
-                        a = cc.p(-locAnchor.x, locAnchor.y);
-                        b = cc.p(locAnchor.x, locAnchor.y);
+                        a = cc.v2(-locAnchor.x, locAnchor.y);
+                        b = cc.v2(locAnchor.x, locAnchor.y);
                     } else {
                         if (degrees < 180) {
-                            a = cc.p(locAnchor.x, locAnchor.y);
-                            b = cc.p(locAnchor.x, -locAnchor.y);
+                            a = cc.v2(locAnchor.x, locAnchor.y);
+                            b = cc.v2(locAnchor.x, -locAnchor.y);
                         } else {
                             if (degrees < 270) {
-                                a = cc.p(locAnchor.x, -locAnchor.y);
-                                b = cc.p(-locAnchor.x, -locAnchor.y);
+                                a = cc.v2(locAnchor.x, -locAnchor.y);
+                                b = cc.v2(-locAnchor.x, -locAnchor.y);
                             } else {
-                                a = cc.p(-locAnchor.x, -locAnchor.y);
-                                b = cc.p(-locAnchor.x, locAnchor.y);
+                                a = cc.v2(-locAnchor.x, -locAnchor.y);
+                                b = cc.v2(-locAnchor.x, locAnchor.y);
                             }
                         }
                     }
@@ -3155,8 +3155,8 @@
                     _ccsg.Node.prototype.ctor.call(self);
                     EventTarget.call(self);
                     self._shouldBeHidden = false;
-                    self._offsetPosition = cc.p(0, 0);
-                    self._unflippedOffsetPositionFromCenter = cc.p(0, 0);
+                    self._offsetPosition = cc.v2(0, 0);
+                    self._unflippedOffsetPositionFromCenter = cc.v2(0, 0);
                     self._blendFunc = {
                         src: cc.macro.BLEND_SRC,
                         dst: cc.macro.BLEND_DST
@@ -3195,7 +3195,7 @@
                     this.textureAtlas = textureAtlas;
                 },
                 getOffsetPosition: function() {
-                    return cc.p(this._offsetPosition);
+                    return cc.v2(this._offsetPosition);
                 },
                 _getOffsetX: function() {
                     return this._offsetPosition.x;
@@ -4301,13 +4301,13 @@
                 cc.current_stack.top = this._stackMatrix;
                 if (1 === macro.SPRITE_DEBUG_DRAW || node._showNode) {
                     var locQuad = this._quad;
-                    var verticesG1 = [ cc.p(locQuad.tl.vertices.x, locQuad.tl.vertices.y), cc.p(locQuad.bl.vertices.x, locQuad.bl.vertices.y), cc.p(locQuad.br.vertices.x, locQuad.br.vertices.y), cc.p(locQuad.tr.vertices.x, locQuad.tr.vertices.y) ];
+                    var verticesG1 = [ cc.v2(locQuad.tl.vertices.x, locQuad.tl.vertices.y), cc.v2(locQuad.bl.vertices.x, locQuad.bl.vertices.y), cc.v2(locQuad.br.vertices.x, locQuad.br.vertices.y), cc.v2(locQuad.tr.vertices.x, locQuad.tr.vertices.y) ];
                     cc._drawingUtil.drawPoly(verticesG1, 4, true);
                 } else {
                     if (2 === macro.SPRITE_DEBUG_DRAW) {
                         var drawRectG2 = node.getTextureRect();
                         var offsetPixG2 = node.getOffsetPosition();
-                        var verticesG2 = [ cc.p(offsetPixG2.x, offsetPixG2.y), cc.p(offsetPixG2.x + drawRectG2.width, offsetPixG2.y), cc.p(offsetPixG2.x + drawRectG2.width, offsetPixG2.y + drawRectG2.height), cc.p(offsetPixG2.x, offsetPixG2.y + drawRectG2.height) ];
+                        var verticesG2 = [ cc.v2(offsetPixG2.x, offsetPixG2.y), cc.v2(offsetPixG2.x + drawRectG2.width, offsetPixG2.y), cc.v2(offsetPixG2.x + drawRectG2.width, offsetPixG2.y + drawRectG2.height), cc.v2(offsetPixG2.x, offsetPixG2.y + drawRectG2.height) ];
                         cc._drawingUtil.drawPoly(verticesG2, 4, true);
                     }
                 }
@@ -4978,8 +4978,8 @@
                         y3 = contentSize.height + trimmedTop * scaleY;
                     }
                     var vertices = [];
-                    vertices.push(cc.p(x0, y0));
-                    vertices.push(cc.p(x3, y3));
+                    vertices.push(cc.v2(x0, y0));
+                    vertices.push(cc.v2(x3, y3));
                     return vertices;
                 },
                 _calculateUVs: function(spriteFrame) {
@@ -5000,8 +5000,8 @@
                         v3 = (textureRect.y + textureRect.height) / atlasHeight;
                     }
                     var uvCoordinates = [];
-                    uvCoordinates.push(cc.p(u0, v3));
-                    uvCoordinates.push(cc.p(u3, v0));
+                    uvCoordinates.push(cc.v2(u0, v3));
+                    uvCoordinates.push(cc.v2(u3, v0));
                     return uvCoordinates;
                 }
             };
@@ -5068,10 +5068,10 @@
                     y2 = y1 + sizableHeight;
                     y3 = preferSize.height;
                     var vertices = [];
-                    vertices.push(cc.p(x0, y0));
-                    vertices.push(cc.p(x1, y1));
-                    vertices.push(cc.p(x2, y2));
-                    vertices.push(cc.p(x3, y3));
+                    vertices.push(cc.v2(x0, y0));
+                    vertices.push(cc.v2(x1, y1));
+                    vertices.push(cc.v2(x2, y2));
+                    vertices.push(cc.v2(x3, y3));
                     return vertices;
                 },
                 _calculateUVs: function(spriteFrame, insetLeft, insetRight, insetTop, insetBottom) {
@@ -5109,10 +5109,10 @@
                         v3 = (textureRect.y + textureRect.height) / atlasHeight;
                     }
                     var uvCoordinates = [];
-                    uvCoordinates.push(cc.p(u0, v3));
-                    uvCoordinates.push(cc.p(u1, v2));
-                    uvCoordinates.push(cc.p(u2, v1));
-                    uvCoordinates.push(cc.p(u3, v0));
+                    uvCoordinates.push(cc.v2(u0, v3));
+                    uvCoordinates.push(cc.v2(u1, v2));
+                    uvCoordinates.push(cc.v2(u2, v1));
+                    uvCoordinates.push(cc.v2(u3, v0));
                     return uvCoordinates;
                 }
             };
@@ -5174,8 +5174,8 @@
                         v3 = (textureRect.y + textureRect.height) / atlasHeight;
                     }
                     var uvCoordinates = [];
-                    uvCoordinates.push(cc.p(u0, v3));
-                    uvCoordinates.push(cc.p(u3, v0));
+                    uvCoordinates.push(cc.v2(u0, v3));
+                    uvCoordinates.push(cc.v2(u3, v0));
                     return uvCoordinates;
                 }
             };
@@ -5258,7 +5258,7 @@
                     x3 = contentSize.width;
                     y0 = 0;
                     y3 = contentSize.height;
-                    return [ cc.p(x0, y0), cc.p(x3, y3) ];
+                    return [ cc.v2(x0, y0), cc.v2(x3, y3) ];
                 },
                 _calculateUVs: function(spriteFrame) {
                     var atlasWidth = spriteFrame._texture.getPixelWidth();
@@ -5277,7 +5277,7 @@
                         v0 = textureRect.y / atlasHeight;
                         v3 = (textureRect.y + textureRect.height) / atlasHeight;
                     }
-                    return [ cc.p(u0, v3), cc.p(u3, v0) ];
+                    return [ cc.v2(u0, v3), cc.v2(u3, v0) ];
                 }
             };
             var fillQuadGeneratorRadial = {
@@ -5570,7 +5570,7 @@
                     this._renderCmd.setState(this._brightState);
                     this._blendFunc = cc.BlendFunc._alphaNonPremultiplied();
                     this._fillCenter = cc.v2(0, 0);
-                    this.setAnchorPoint(cc.p(.5, .5));
+                    this.setAnchorPoint(cc.v2(.5, .5));
                     if ("string" === typeof textureOrSpriteFrame) {
                         var frame = cc.spriteFrameCache.getSpriteFrame(textureOrSpriteFrame);
                         if (frame) {
@@ -6287,7 +6287,7 @@
                         size = 1;
                     }
                     var locScaleX = cc.view.getScaleX(), locScaleY = cc.view.getScaleY();
-                    var newPoint = cc.p(point.x * locScaleX, point.y * locScaleY);
+                    var newPoint = cc.v2(point.x * locScaleX, point.y * locScaleY);
                     var ctx = this._renderContext.getContext();
                     ctx.beginPath();
                     ctx.arc(newPoint.x, -newPoint.y, size * locScaleX, 0, 2 * Math.PI, false);
@@ -6318,13 +6318,13 @@
                     locContext.stroke();
                 },
                 drawRect: function(origin, destination) {
-                    this.drawLine(cc.p(origin.x, origin.y), cc.p(destination.x, origin.y));
-                    this.drawLine(cc.p(destination.x, origin.y), cc.p(destination.x, destination.y));
-                    this.drawLine(cc.p(destination.x, destination.y), cc.p(origin.x, destination.y));
-                    this.drawLine(cc.p(origin.x, destination.y), cc.p(origin.x, origin.y));
+                    this.drawLine(cc.v2(origin.x, origin.y), cc.v2(destination.x, origin.y));
+                    this.drawLine(cc.v2(destination.x, origin.y), cc.v2(destination.x, destination.y));
+                    this.drawLine(cc.v2(destination.x, destination.y), cc.v2(origin.x, destination.y));
+                    this.drawLine(cc.v2(origin.x, destination.y), cc.v2(origin.x, origin.y));
                 },
                 drawSolidRect: function(origin, destination, color) {
-                    var vertices = [ origin, cc.p(destination.x, origin.y), destination, cc.p(origin.x, destination.y) ];
+                    var vertices = [ origin, cc.v2(destination.x, origin.y), destination, cc.v2(origin.x, destination.y) ];
                     this.drawSolidPoly(vertices, 4, color);
                 },
                 drawPoly: function(vertices, numOfVertices, closePolygon, fill) {
@@ -6374,10 +6374,10 @@
                     for (var i = 0; i < segments; i++) {
                         var x = Math.pow(1 - t, 2) * origin.x + 2 * (1 - t) * t * control.x + t * t * destination.x;
                         var y = Math.pow(1 - t, 2) * origin.y + 2 * (1 - t) * t * control.y + t * t * destination.y;
-                        vertices.push(cc.p(x, y));
+                        vertices.push(cc.v2(x, y));
                         t += 1 / segments;
                     }
-                    vertices.push(cc.p(destination.x, destination.y));
+                    vertices.push(cc.v2(destination.x, destination.y));
                     this.drawPoly(vertices, segments + 1, false, false);
                 },
                 drawCubicBezier: function(origin, control1, control2, destination, segments) {
@@ -6387,10 +6387,10 @@
                     for (var i = 0; i < segments; i++) {
                         var x = Math.pow(1 - t, 3) * origin.x + 3 * Math.pow(1 - t, 2) * t * control1.x + 3 * (1 - t) * t * t * control2.x + t * t * t * destination.x;
                         var y = Math.pow(1 - t, 3) * origin.y + 3 * Math.pow(1 - t, 2) * t * control1.y + 3 * (1 - t) * t * t * control2.y + t * t * t * destination.y;
-                        vertices.push(cc.p(x, y));
+                        vertices.push(cc.v2(x, y));
                         t += 1 / segments;
                     }
-                    vertices.push(cc.p(destination.x, destination.y));
+                    vertices.push(cc.v2(destination.x, destination.y));
                     this.drawPoly(vertices, segments + 1, false, false);
                 },
                 drawCatmullRom: function(points, segments) {
@@ -6589,13 +6589,13 @@
                     cc.incrementGLDraws(1);
                 },
                 drawRect: function(origin, destination) {
-                    this.drawLine(cc.p(origin.x, origin.y), cc.p(destination.x, origin.y));
-                    this.drawLine(cc.p(destination.x, origin.y), cc.p(destination.x, destination.y));
-                    this.drawLine(cc.p(destination.x, destination.y), cc.p(origin.x, destination.y));
-                    this.drawLine(cc.p(origin.x, destination.y), cc.p(origin.x, origin.y));
+                    this.drawLine(cc.v2(origin.x, origin.y), cc.v2(destination.x, origin.y));
+                    this.drawLine(cc.v2(destination.x, origin.y), cc.v2(destination.x, destination.y));
+                    this.drawLine(cc.v2(destination.x, destination.y), cc.v2(origin.x, destination.y));
+                    this.drawLine(cc.v2(origin.x, destination.y), cc.v2(origin.x, origin.y));
                 },
                 drawSolidRect: function(origin, destination, color) {
-                    var vertices = [ origin, cc.p(destination.x, origin.y), destination, cc.p(origin.x, destination.y) ];
+                    var vertices = [ origin, cc.v2(destination.x, origin.y), destination, cc.v2(origin.x, destination.y) ];
                     this.drawSolidPoly(vertices, 4, color);
                 },
                 drawPoly: function(vertices, numOfVertices, closePolygon) {
@@ -6867,14 +6867,14 @@
                     string = string || "";
                     this._string = string;
                     _ccsg.Node.prototype.ctor.call(this);
-                    this.setAnchorPoint(cc.p(.5, .5));
+                    this.setAnchorPoint(cc.v2(.5, .5));
                     _ccsg.Node.prototype.setContentSize.call(this, cc.size(128, 128));
                     this._blendFunc = cc.BlendFunc._alphaNonPremultiplied();
                     this.setFontFileOrFamily(fontHandle, textureUrl);
                     this.setString(this._string);
                 },
                 _resetBMFont: function() {
-                    this._imageOffset = cc.p(0, 0);
+                    this._imageOffset = cc.v2(0, 0);
                     this._cascadeColorEnabled = true;
                     this._cascadeOpacityEnabled = true;
                     this._fontAtlas = null;
@@ -7263,7 +7263,7 @@
                                 if (!fontChar) {
                                     fontChar = new _ccsg.Sprite();
                                     fontChar.initWithTexture(locTexture);
-                                    fontChar.setAnchorPoint(cc.p(0, 1));
+                                    fontChar.setAnchorPoint(cc.v2(0, 1));
                                 }
                                 fontChar.setTextureRect(this._reusedRect, false, this._reusedRect.size);
                                 var letterPositionX = this._lettersInfo[ctr]._positionX + this._linesOffsetX[this._lettersInfo[ctr]._lineIndex];
@@ -7341,7 +7341,7 @@
                     var highestY = 0;
                     var lowestY = 0;
                     var letterDef = null;
-                    var letterPosition = cc.p(0, 0);
+                    var letterPosition = cc.v2(0, 0);
                     this._updateBMFontScale();
                     for (var index = 0; index < textLen; ) {
                         var character = this._string.charAt(index);
@@ -7994,7 +7994,7 @@
                             firstLinelabelY = this._canvasSize.height - lineHeight * (lineCount - 1);
                         }
                     }
-                    return cc.p(labelX, firstLinelabelY);
+                    return cc.v2(labelX, firstLinelabelY);
                 };
                 proto._calculateTextBaseline = function() {
                     var node = this._node;
@@ -8230,11 +8230,11 @@
                     var editBoxSize = this._editBox.getContentSize();
                     this._textLabel = new _ccsg.Label();
                     this._textLabel.setVisible(false);
-                    this._textLabel.setAnchorPoint(cc.p(0, 1));
+                    this._textLabel.setAnchorPoint(cc.v2(0, 1));
                     this._textLabel.setOverflow(_ccsg.Label.Overflow.CLAMP);
                     this._editBox.addChild(this._textLabel, 100);
                     this._placeholderLabel = new _ccsg.Label();
-                    this._placeholderLabel.setAnchorPoint(cc.p(0, 1));
+                    this._placeholderLabel.setAnchorPoint(cc.v2(0, 1));
                     this._placeholderLabel.setColor(cc.Color.GRAY);
                     this._editBox.addChild(this._placeholderLabel, 100);
                     this._updateLabelPosition(editBoxSize);
@@ -8244,15 +8244,15 @@
                     this._placeholderLabel.setLineHeight(editBoxSize.height);
                     var placeholderLabelSize = this._placeholderLabel.getContentSize();
                     if (this._editBox._editBoxInputMode === InputMode.ANY) {
-                        this._textLabel.setPosition(cc.p(0, editBoxSize.height));
-                        this._placeholderLabel.setPosition(cc.p(0, editBoxSize.height));
+                        this._textLabel.setPosition(cc.v2(0, editBoxSize.height));
+                        this._placeholderLabel.setPosition(cc.v2(0, editBoxSize.height));
                         this._placeholderLabel.setVerticalAlign(cc.VerticalTextAlignment.TOP);
                         this._textLabel.setVerticalAlign(cc.VerticalTextAlignment.TOP);
                         this._textLabel.enableWrapText(true);
                     } else {
                         this._textLabel.enableWrapText(false);
-                        this._textLabel.setPosition(cc.p(0, editBoxSize.height));
-                        this._placeholderLabel.setPosition(cc.p(0, (editBoxSize.height + placeholderLabelSize.height) / 2));
+                        this._textLabel.setPosition(cc.v2(0, editBoxSize.height));
+                        this._placeholderLabel.setPosition(cc.v2(0, (editBoxSize.height + placeholderLabelSize.height) / 2));
                         this._placeholderLabel.setVerticalAlign(cc.VerticalTextAlignment.CENTER);
                         this._textLabel.setVerticalAlign(cc.VerticalTextAlignment.CENTER);
                     }
@@ -8717,7 +8717,7 @@
                     }
                     this._backgroundSprite = normal9SpriteBg;
                     if (this._backgroundSprite && !this._backgroundSprite.parent) {
-                        this._backgroundSprite.setAnchorPoint(cc.p(0, 0));
+                        this._backgroundSprite.setAnchorPoint(cc.v2(0, 0));
                         this.addChild(this._backgroundSprite);
                         this._updateBackgroundSpriteSize(size.width, size.height);
                     }
@@ -10103,7 +10103,7 @@
                             if (null == lineColor.a) {
                                 lineColor.a = 255;
                             }
-                            var vertices = [ origin, cc.p(destination.x, origin.y), destination, cc.p(origin.x, destination.y) ];
+                            var vertices = [ origin, cc.v2(destination.x, origin.y), destination, cc.v2(origin.x, destination.y) ];
                             var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                             element.verts = vertices;
                             element.lineWidth = lineWidth;
@@ -10132,10 +10132,10 @@
                                 var rads = i * coef;
                                 var j = radius * Math.cos(rads + angle) + center.x;
                                 var k = radius * Math.sin(rads + angle) + center.y;
-                                vertices.push(cc.p(j, k));
+                                vertices.push(cc.v2(j, k));
                             }
                             if (drawLineToCenter) {
-                                vertices.push(cc.p(center.x, center.y));
+                                vertices.push(cc.v2(center.x, center.y));
                             }
                             var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                             element.verts = vertices;
@@ -10155,10 +10155,10 @@
                             for (var i = 0; i < segments; i++) {
                                 var x = Math.pow(1 - t, 2) * origin.x + 2 * (1 - t) * t * control.x + t * t * destination.x;
                                 var y = Math.pow(1 - t, 2) * origin.y + 2 * (1 - t) * t * control.y + t * t * destination.y;
-                                vertices.push(cc.p(x, y));
+                                vertices.push(cc.v2(x, y));
                                 t += 1 / segments;
                             }
-                            vertices.push(cc.p(destination.x, destination.y));
+                            vertices.push(cc.v2(destination.x, destination.y));
                             var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                             element.verts = vertices;
                             element.lineWidth = lineWidth;
@@ -10177,10 +10177,10 @@
                             for (var i = 0; i < segments; i++) {
                                 var x = Math.pow(1 - t, 3) * origin.x + 3 * Math.pow(1 - t, 2) * t * control1.x + 3 * (1 - t) * t * t * control2.x + t * t * t * destination.x;
                                 var y = Math.pow(1 - t, 3) * origin.y + 3 * Math.pow(1 - t, 2) * t * control1.y + 3 * (1 - t) * t * t * control2.y + t * t * t * destination.y;
-                                vertices.push(cc.p(x, y));
+                                vertices.push(cc.v2(x, y));
                                 t += 1 / segments;
                             }
-                            vertices.push(cc.p(destination.x, destination.y));
+                            vertices.push(cc.v2(destination.x, destination.y));
                             var element = new cc._DrawNodeElement(cc.DrawNode.TYPE_POLY);
                             element.verts = vertices;
                             element.lineWidth = lineWidth;
@@ -10278,7 +10278,7 @@
                         drawPoly: function(verts, fillColor, lineWidth, color) {
                             var vertsCopy = [];
                             for (var i = 0; i < verts.length; i++) {
-                                vertsCopy.push(cc.p(verts[i].x, verts[i].y));
+                                vertsCopy.push(cc.v2(verts[i].x, verts[i].y));
                             }
                             return this.drawPoly_(vertsCopy, fillColor, lineWidth, color);
                         },
@@ -10321,7 +10321,7 @@
                                 if (null == lineColor.a) {
                                     lineColor.a = 255;
                                 }
-                                var vertices = [ origin, cc.p(destination.x, origin.y), destination, cc.p(origin.x, destination.y) ];
+                                var vertices = [ origin, cc.v2(destination.x, origin.y), destination, cc.v2(origin.x, destination.y) ];
                                 if (null == fillColor) {
                                     this._drawSegments(vertices, lineWidth, lineColor, true);
                                 } else {
@@ -10339,10 +10339,10 @@
                                     var rads = i * coef;
                                     var j = radius * Math.cos(rads + angle) + center.x;
                                     var k = radius * Math.sin(rads + angle) + center.y;
-                                    vertices.push(cc.p(j, k));
+                                    vertices.push(cc.v2(j, k));
                                 }
                                 if (drawLineToCenter) {
-                                    vertices.push(cc.p(center.x, center.y));
+                                    vertices.push(cc.v2(center.x, center.y));
                                 }
                                 lineWidth *= .5;
                                 for (i = 0, len = vertices.length; i < len - 1; i++) {
@@ -10359,10 +10359,10 @@
                                 for (var i = 0; i < segments; i++) {
                                     var x = Math.pow(1 - t, 2) * origin.x + 2 * (1 - t) * t * control.x + t * t * destination.x;
                                     var y = Math.pow(1 - t, 2) * origin.y + 2 * (1 - t) * t * control.y + t * t * destination.y;
-                                    vertices.push(cc.p(x, y));
+                                    vertices.push(cc.v2(x, y));
                                     t += 1 / segments;
                                 }
-                                vertices.push(cc.p(destination.x, destination.y));
+                                vertices.push(cc.v2(destination.x, destination.y));
                                 this._drawSegments(vertices, lineWidth, color, false);
                             },
                             drawCubicBezier: function(origin, control1, control2, destination, segments, lineWidth, color) {
@@ -10375,10 +10375,10 @@
                                 for (var i = 0; i < segments; i++) {
                                     var x = Math.pow(1 - t, 3) * origin.x + 3 * Math.pow(1 - t, 2) * t * control1.x + 3 * (1 - t) * t * t * control2.x + t * t * t * destination.x;
                                     var y = Math.pow(1 - t, 3) * origin.y + 3 * Math.pow(1 - t, 2) * t * control1.y + 3 * (1 - t) * t * t * control2.y + t * t * t * destination.y;
-                                    vertices.push(cc.p(x, y));
+                                    vertices.push(cc.v2(x, y));
                                     t += 1 / segments;
                                 }
-                                vertices.push(cc.p(destination.x, destination.y));
+                                vertices.push(cc.v2(destination.x, destination.y));
                                 this._drawSegments(vertices, lineWidth, color, false);
                             },
                             drawCatmullRom: function(points, segments, lineWidth, color) {
@@ -11297,7 +11297,7 @@
                 var modelViewStack = cc.math.modelview_matrix_stack;
                 modelViewStack.push();
                 modelViewStack.top.identity();
-                cc._drawingUtil.drawSolidRect(cc.p(-1, -1), cc.p(1, 1), cc.color(255, 255, 255, 255));
+                cc._drawingUtil.drawSolidRect(cc.v2(-1, -1), cc.v2(1, 1), cc.color(255, 255, 255, 255));
                 projStack.pop();
                 modelViewStack.pop();
             };
@@ -11351,8 +11351,8 @@
             var PNGReader = require("../cocos2d/particle/CCPNGReader");
             var tiffReader = require("../cocos2d/particle/CCTIFFReader");
             cc.Particle = function(pos, startPos, color, deltaColor, size, deltaSize, rotation, deltaRotation, timeToLive, atlasIndex, modeA, modeB) {
-                this.pos = pos ? pos : cc.p(0, 0);
-                this.startPos = startPos ? startPos : cc.p(0, 0);
+                this.pos = pos ? pos : cc.v2(0, 0);
+                this.startPos = startPos ? startPos : cc.v2(0, 0);
                 this.color = color ? color : {
                     r: 0,
                     g: 0,
@@ -11374,10 +11374,10 @@
                 this.modeA = modeA ? modeA : new cc.Particle.ModeA();
                 this.modeB = modeB ? modeB : new cc.Particle.ModeB();
                 this.isChangeColor = false;
-                this.drawPos = cc.p(0, 0);
+                this.drawPos = cc.v2(0, 0);
             };
             cc.Particle.ModeA = function(dir, radialAccel, tangentialAccel) {
-                this.dir = dir ? dir : cc.p(0, 0);
+                this.dir = dir ? dir : cc.v2(0, 0);
                 this.radialAccel = radialAccel || 0;
                 this.tangentialAccel = tangentialAccel || 0;
             };
@@ -11387,7 +11387,7 @@
                 this.radius = radius || 0;
                 this.deltaRadius = deltaRadius || 0;
             };
-            cc.Particle.TemporaryPoints = [ cc.p(), cc.p(), cc.p(), cc.p() ];
+            cc.Particle.TemporaryPoints = [ cc.v2(), cc.v2(), cc.v2(), cc.v2() ];
             _ccsg.ParticleSystem = _ccsg.Node.extend({
                 _className: "ParticleSystem",
                 _plistFile: "",
@@ -11395,7 +11395,7 @@
                 _dontTint: false,
                 modeA: null,
                 modeB: null,
-                _pointZeroForParticle: cc.p(0, 0),
+                _pointZeroForParticle: cc.v2(0, 0),
                 _particles: null,
                 _emitCounter: 0,
                 _particleIdx: 0,
@@ -11443,8 +11443,8 @@
                         dst: cc.macro.BLEND_DST
                     };
                     this._particles = [];
-                    this._sourcePosition = cc.p(0, 0);
-                    this._posVar = cc.p(0, 0);
+                    this._sourcePosition = cc.v2(0, 0);
+                    this._posVar = cc.v2(0, 0);
                     this._startColor = cc.color(255, 255, 255, 255);
                     this._startColorVar = cc.color(255, 255, 255, 255);
                     this._endColor = cc.color(255, 255, 255, 255);
@@ -11452,7 +11452,7 @@
                     this._plistFile = "";
                     this._elapsed = 0;
                     this._dontTint = false;
-                    this._pointZeroForParticle = cc.p(0, 0);
+                    this._pointZeroForParticle = cc.v2(0, 0);
                     this._emitCounter = 0;
                     this._particleIdx = 0;
                     this._batchNode = null;
@@ -11591,7 +11591,7 @@
                 },
                 getGravity: function() {
                     var locGravity = this.modeA.gravity;
-                    return cc.p(locGravity.x, locGravity.y);
+                    return cc.v2(locGravity.x, locGravity.y);
                 },
                 setGravity: function(gravity) {
                     this.modeA.gravity = gravity;
@@ -12271,8 +12271,8 @@
                         retParticle.setStartSizeVar(this.getStartSizeVar());
                         retParticle.setEndSize(this.getEndSize());
                         retParticle.setEndSizeVar(this.getEndSizeVar());
-                        retParticle.setPosition(cc.p(this.x, this.y));
-                        retParticle.setPosVar(cc.p(this.getPosVar().x, this.getPosVar().y));
+                        retParticle.setPosition(cc.v2(this.x, this.y));
+                        retParticle.setPosVar(cc.v2(this.getPosVar().x, this.getPosVar().y));
                         retParticle.setPositionType(this.getPositionType());
                         retParticle.setStartSpin(this.getStartSpin() || 0);
                         retParticle.setStartSpinVar(this.getStartSpinVar() || 0);
@@ -12281,7 +12281,7 @@
                         retParticle.setEmitterMode(this.getEmitterMode());
                         if (this.getEmitterMode() === _ccsg.ParticleSystem.Mode.GRAVITY) {
                             var gra = this.getGravity();
-                            retParticle.setGravity(cc.p(gra.x, gra.y));
+                            retParticle.setGravity(cc.v2(gra.x, gra.y));
                             retParticle.setSpeed(this.getSpeed());
                             retParticle.setSpeedVar(this.getSpeedVar());
                             retParticle.setRadialAccel(this.getRadialAccel());
@@ -12391,7 +12391,7 @@
             _p.texture;
             cc.defineGetterSetter(_p, "texture", _p.getTexture, _p.setTexture);
             _ccsg.ParticleSystem.ModeA = function(gravity, speed, speedVar, tangentialAccel, tangentialAccelVar, radialAccel, radialAccelVar, rotationIsDir) {
-                this.gravity = gravity ? gravity : cc.p(0, 0);
+                this.gravity = gravity ? gravity : cc.v2(0, 0);
                 this.speed = speed || 0;
                 this.speedVar = speedVar || 0;
                 this.tangentialAccel = tangentialAccel || 0;
@@ -13434,7 +13434,7 @@
                     this.ownTiles = true;
                     this._minGID = 1e5;
                     this._maxGID = 0;
-                    this.offset = cc.p(0, 0);
+                    this.offset = cc.v2(0, 0);
                 },
                 getProperties: function() {
                     return this.properties;
@@ -13720,7 +13720,7 @@
                             } else {
                                 layer._opacity = 255;
                             }
-                            layer.offset = cc.p(parseFloat(selLayer.getAttribute("x")) || 0, parseFloat(selLayer.getAttribute("y")) || 0);
+                            layer.offset = cc.v2(parseFloat(selLayer.getAttribute("x")) || 0, parseFloat(selLayer.getAttribute("y")) || 0);
                             var nodeValue = "";
                             for (j = 0; j < data.childNodes.length; j++) {
                                 nodeValue += data.childNodes[j].nodeValue;
@@ -13785,7 +13785,7 @@
                             var selGroup = objectGroups[i];
                             var objectGroup = new cc.TMXObjectGroup();
                             objectGroup.groupName = selGroup.getAttribute("name");
-                            objectGroup.setPositionOffset(cc.p(parseFloat(selGroup.getAttribute("x")) * this.getTileSize().width || 0, parseFloat(selGroup.getAttribute("y")) * this.getTileSize().height || 0));
+                            objectGroup.setPositionOffset(cc.v2(parseFloat(selGroup.getAttribute("x")) * this.getTileSize().width || 0, parseFloat(selGroup.getAttribute("y")) * this.getTileSize().height || 0));
                             var groupProps = selGroup.querySelectorAll("objectgroup > properties > property");
                             if (groupProps) {
                                 for (j = 0; j < groupProps.length; j++) {
@@ -13912,12 +13912,12 @@
                 _objects: null,
                 ctor: function() {
                     this.groupName = "";
-                    this._positionOffset = cc.p(0, 0);
+                    this._positionOffset = cc.v2(0, 0);
                     this.properties = [];
                     this._objects = [];
                 },
                 getPositionOffset: function() {
-                    return cc.p(this._positionOffset);
+                    return cc.v2(this._positionOffset);
                 },
                 setPositionOffset: function(offset) {
                     this._positionOffset.x = offset.x;
@@ -14105,7 +14105,7 @@
                         throw new Error("_ccsg.TMXLayer.getTileAt(): pos should be non-null");
                     }
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) {
                         throw new Error("_ccsg.TMXLayer.getTileAt(): invalid position");
@@ -14140,7 +14140,7 @@
                         throw new Error("_ccsg.TMXLayer.getTileGIDAt(): pos should be non-null");
                     }
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) {
                         throw new Error("_ccsg.TMXLayer.getTileGIDAt(): invalid position");
@@ -14158,7 +14158,7 @@
                         throw new Error("_ccsg.TMXLayer.getTileFlagsAt(): pos should be non-null");
                     }
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) {
                         throw new Error("_ccsg.TMXLayer.getTileFlagsAt(): invalid position");
@@ -14177,7 +14177,7 @@
                     }
                     var pos;
                     if (void 0 !== flags) {
-                        pos = cc.p(posOrX, flagsOrY);
+                        pos = cc.v2(posOrX, flagsOrY);
                     } else {
                         pos = posOrX;
                         flags = flagsOrY;
@@ -14226,7 +14226,7 @@
                         throw new Error("_ccsg.TMXLayer.removeTileAt(): pos should be non-null");
                     }
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     if (pos.x >= this._layerSize.width || pos.y >= this._layerSize.height || pos.x < 0 || pos.y < 0) {
                         throw new Error("_ccsg.TMXLayer.removeTileAt(): invalid position");
@@ -14268,9 +14268,9 @@
                 },
                 getPositionAt: function(pos, y) {
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
-                    var ret = cc.p(0, 0);
+                    var ret = cc.v2(0, 0);
                     switch (this.layerOrientation) {
                       case cc.TiledMap.Orientation.ORTHO:
                         ret = this._positionForOrthoAt(pos);
@@ -14300,7 +14300,7 @@
                             var pos = x + locLayerWidth * y;
                             var gid = this.tiles[pos];
                             if (0 !== gid) {
-                                this._appendTileForGID(gid, cc.p(x, y));
+                                this._appendTileForGID(gid, cc.v2(x, y));
                                 this._minGID = Math.min(gid, this._minGID);
                                 this._maxGID = Math.max(gid, this._maxGID);
                             }
@@ -14338,24 +14338,24 @@
                     this.layerName = layerName;
                 },
                 _positionForIsoAt: function(pos) {
-                    return cc.p(this._mapTileSize.width / 2 * (this._layerSize.width + pos.x - pos.y - 1), this._mapTileSize.height / 2 * (2 * this._layerSize.height - pos.x - pos.y - 2));
+                    return cc.v2(this._mapTileSize.width / 2 * (this._layerSize.width + pos.x - pos.y - 1), this._mapTileSize.height / 2 * (2 * this._layerSize.height - pos.x - pos.y - 2));
                 },
                 _positionForOrthoAt: function(pos) {
-                    return cc.p(pos.x * this._mapTileSize.width, (this._layerSize.height - pos.y - 1) * this._mapTileSize.height);
+                    return cc.v2(pos.x * this._mapTileSize.width, (this._layerSize.height - pos.y - 1) * this._mapTileSize.height);
                 },
                 _positionForHexAt: function(pos) {
                     var diffY = pos.x % 2 === 1 ? -this._mapTileSize.height / 2 : 0;
-                    return cc.p(pos.x * this._mapTileSize.width * 3 / 4, (this._layerSize.height - pos.y - 1) * this._mapTileSize.height + diffY);
+                    return cc.v2(pos.x * this._mapTileSize.width * 3 / 4, (this._layerSize.height - pos.y - 1) * this._mapTileSize.height + diffY);
                 },
                 _calculateLayerOffset: function(pos) {
-                    var ret = cc.p(0, 0);
+                    var ret = cc.v2(0, 0);
                     switch (this.layerOrientation) {
                       case cc.TiledMap.Orientation.ORTHO:
-                        ret = cc.p(pos.x * this._mapTileSize.width, -pos.y * this._mapTileSize.height);
+                        ret = cc.v2(pos.x * this._mapTileSize.width, -pos.y * this._mapTileSize.height);
                         break;
 
                       case cc.TiledMap.Orientation.ISO:
-                        ret = cc.p(this._mapTileSize.width / 2 * (pos.x - pos.y), this._mapTileSize.height / 2 * (-pos.x - pos.y));
+                        ret = cc.v2(this._mapTileSize.width / 2 * (pos.x - pos.y), this._mapTileSize.height / 2 * (-pos.x - pos.y));
                         break;
 
                       case cc.TiledMap.Orientation.HEX:
@@ -14772,7 +14772,7 @@
                 ctor: function() {
                     _ccsg.Node.prototype.ctor.call(this);
                     this.parallaxArray = [];
-                    this._lastPosition = cc.p(-100, -100);
+                    this._lastPosition = cc.v2(-100, -100);
                 },
                 addChild: function(child, z, ratio, offset) {
                     if (3 === arguments.length) {
@@ -15034,16 +15034,16 @@
                 var nuPointsMinus = nuPoints - 1;
                 for (var i = offset; i < nuPoints; i++) {
                     idx = 2 * i;
-                    var p1 = cc.p(points[2 * i], points[2 * i + 1]);
+                    var p1 = cc.v2(points[2 * i], points[2 * i + 1]);
                     var perpVector;
                     if (0 === i) {
-                        perpVector = cc.pPerp(cc.pNormalize(cc.pSub(p1, cc.p(points[2 * (i + 1)], points[2 * (i + 1) + 1]))));
+                        perpVector = cc.pPerp(cc.pNormalize(cc.pSub(p1, cc.v2(points[2 * (i + 1)], points[2 * (i + 1) + 1]))));
                     } else {
                         if (i === nuPointsMinus) {
-                            perpVector = cc.pPerp(cc.pNormalize(cc.pSub(cc.p(points[2 * (i - 1)], points[2 * (i - 1) + 1]), p1)));
+                            perpVector = cc.pPerp(cc.pNormalize(cc.pSub(cc.v2(points[2 * (i - 1)], points[2 * (i - 1) + 1]), p1)));
                         } else {
-                            var p0 = cc.p(points[2 * (i - 1)], points[2 * (i - 1) + 1]);
-                            var p2 = cc.p(points[2 * (i + 1)], points[2 * (i + 1) + 1]);
+                            var p0 = cc.v2(points[2 * (i - 1)], points[2 * (i - 1) + 1]);
+                            var p2 = cc.v2(points[2 * (i + 1)], points[2 * (i + 1) + 1]);
                             var p2p1 = cc.pNormalize(cc.pSub(p2, p1));
                             var p0p1 = cc.pNormalize(cc.pSub(p0, p1));
                             var angle = Math.acos(cc.pDot(p2p1, p0p1));
@@ -15155,7 +15155,7 @@
                 _className: "MotionStreak",
                 ctor: function(fade, minSeg, stroke, color, texture) {
                     _ccsg.Node.prototype.ctor.call(this);
-                    this._positionR = cc.p(0, 0);
+                    this._positionR = cc.v2(0, 0);
                     this._blendFunc = new cc.BlendFunc(cc.SRC_ALPHA, cc.ONE_MINUS_SRC_ALPHA);
                     this.fastMode = false;
                     this.startingPositionInitialized = false;
@@ -15363,9 +15363,9 @@
                         appendNewPoint = false;
                     } else {
                         if (locNuPoints > 0) {
-                            var locPoint1 = cc.p(locPointVertexes[2 * (locNuPoints - 1)], locPointVertexes[2 * (locNuPoints - 1) + 1]);
+                            var locPoint1 = cc.v2(locPointVertexes[2 * (locNuPoints - 1)], locPointVertexes[2 * (locNuPoints - 1) + 1]);
                             var a1 = cc.pDistanceSQ(locPoint1, this._positionR) < this._minSeg;
-                            var locPoint2 = cc.p(locPointVertexes[2 * (locNuPoints - 2)], locPointVertexes[2 * (locNuPoints - 2) + 1]);
+                            var locPoint2 = cc.v2(locPointVertexes[2 * (locNuPoints - 2)], locPointVertexes[2 * (locNuPoints - 2) + 1]);
                             var a2 = 1 === locNuPoints ? false : cc.pDistanceSQ(locPoint2, this._positionR) < 2 * this._minSeg;
                             if (a1 || a2) {
                                 appendNewPoint = false;
@@ -15648,7 +15648,7 @@
                 _this._boundarySet = !cc._rectEqualToZero(rect);
                 _this._boundaryFullyCovered = false;
                 var winSize = cc.director.getWinSize();
-                _this._fullScreenSize = cc.p(winSize.width, winSize.height);
+                _this._fullScreenSize = cc.v2(winSize.width, winSize.height);
                 _this._halfScreenSize = cc.pMult(_this._fullScreenSize, .5);
                 if (_this._boundarySet) {
                     _this.leftBoundary = -(rect.x + rect.width - _this._fullScreenSize.x);
@@ -17693,9 +17693,9 @@
             _previousPosition: null,
             ctor: function(duration, deltaPos, deltaY) {
                 cc.ActionInterval.prototype.ctor.call(this);
-                this._positionDelta = cc.p(0, 0);
-                this._startPosition = cc.p(0, 0);
-                this._previousPosition = cc.p(0, 0);
+                this._positionDelta = cc.v2(0, 0);
+                this._startPosition = cc.v2(0, 0);
+                this._previousPosition = cc.v2(0, 0);
                 void 0 !== deltaPos && this.initWithDuration(duration, deltaPos, deltaY);
             },
             initWithDuration: function(duration, position, y) {
@@ -17748,7 +17748,7 @@
                 }
             },
             reverse: function() {
-                var action = new cc.MoveBy(this._duration, cc.p(-this._positionDelta.x, -this._positionDelta.y));
+                var action = new cc.MoveBy(this._duration, cc.v2(-this._positionDelta.x, -this._positionDelta.y));
                 this._cloneDecoration(action);
                 this._reverseEaseList(action);
                 return action;
@@ -17761,7 +17761,7 @@
             _endPosition: null,
             ctor: function(duration, position, y) {
                 cc.MoveBy.prototype.ctor.call(this);
-                this._endPosition = cc.p(0, 0);
+                this._endPosition = cc.v2(0, 0);
                 void 0 !== position && this.initWithDuration(duration, position, y);
             },
             initWithDuration: function(duration, position, y) {
@@ -17892,9 +17892,9 @@
             _previousPosition: null,
             ctor: function(duration, position, y, height, jumps) {
                 cc.ActionInterval.prototype.ctor.call(this);
-                this._startPosition = cc.p(0, 0);
-                this._previousPosition = cc.p(0, 0);
-                this._delta = cc.p(0, 0);
+                this._startPosition = cc.v2(0, 0);
+                this._previousPosition = cc.v2(0, 0);
+                this._delta = cc.v2(0, 0);
                 void 0 !== height && this.initWithDuration(duration, position, y, height, jumps);
             },
             initWithDuration: function(duration, position, y, height, jumps) {
@@ -17953,7 +17953,7 @@
                 }
             },
             reverse: function() {
-                var action = new cc.JumpBy(this._duration, cc.p(-this._delta.x, -this._delta.y), this._height, this._jumps);
+                var action = new cc.JumpBy(this._duration, cc.v2(-this._delta.x, -this._delta.y), this._height, this._jumps);
                 this._cloneDecoration(action);
                 this._reverseEaseList(action);
                 return action;
@@ -17966,7 +17966,7 @@
             _endPosition: null,
             ctor: function(duration, position, y, height, jumps) {
                 cc.JumpBy.prototype.ctor.call(this);
-                this._endPosition = cc.p(0, 0);
+                this._endPosition = cc.v2(0, 0);
                 void 0 !== height && this.initWithDuration(duration, position, y, height, jumps);
             },
             initWithDuration: function(duration, position, y, height, jumps) {
@@ -18006,8 +18006,8 @@
             ctor: function(t, c) {
                 cc.ActionInterval.prototype.ctor.call(this);
                 this._config = [];
-                this._startPosition = cc.p(0, 0);
-                this._previousPosition = cc.p(0, 0);
+                this._startPosition = cc.v2(0, 0);
+                this._previousPosition = cc.v2(0, 0);
                 c && this.initWithDuration(t, c);
             },
             initWithDuration: function(t, c) {
@@ -18023,7 +18023,7 @@
                 var newConfigs = [];
                 for (var i = 0; i < this._config.length; i++) {
                     var selConf = this._config[i];
-                    newConfigs.push(cc.p(selConf.x, selConf.y));
+                    newConfigs.push(cc.v2(selConf.x, selConf.y));
                 }
                 action.initWithDuration(this._duration, newConfigs);
                 return action;
@@ -23509,7 +23509,7 @@
                     return this.getWinSize();
                 };
                 _p.getVisibleOrigin = function() {
-                    return cc.p(0, 0);
+                    return cc.v2(0, 0);
                 };
             }
         });
@@ -23634,7 +23634,7 @@
                 var glSize = this._openGLView.getDesignResolutionSize();
                 var glCoord = new math.Vec3(2 * uiPoint.x / glSize.width - 1, 1 - 2 * uiPoint.y / glSize.height, zClip);
                 glCoord.transformCoord(transformInv);
-                return cc.p(glCoord.x, glCoord.y);
+                return cc.v2(glCoord.x, glCoord.y);
             };
             _p.convertToUI = function(glPoint) {
                 var transform = new math.Matrix4();
@@ -23642,7 +23642,7 @@
                 var clipCoord = new math.Vec3(glPoint.x, glPoint.y, 0);
                 clipCoord.transformCoord(transform);
                 var glSize = this._openGLView.getDesignResolutionSize();
-                return cc.p(glSize.width * (.5 * clipCoord.x + .5), glSize.height * (.5 * -clipCoord.y + .5));
+                return cc.v2(glSize.width * (.5 * clipCoord.x + .5), glSize.height * (.5 * -clipCoord.y + .5));
             };
             _p.getVisibleSize = function() {
                 return this._openGLView.getVisibleSize();
@@ -28752,7 +28752,7 @@
                     var finalPositionY = fnPositionY(child, rowMaxHeight, row);
                     if (baseWidth >= child.width + 2 * this.padding) {
                         if (applyChildren) {
-                            child.setPosition(cc.p(nextX, finalPositionY));
+                            child.setPosition(cc.v2(nextX, finalPositionY));
                         }
                     }
                     var signX = 1;
@@ -28860,7 +28860,7 @@
                     var finalPositionX = fnPositionX(child, columnMaxWidth, column);
                     if (baseHeight >= child.height + 2 * this.padding) {
                         if (applyChildren) {
-                            child.setPosition(cc.p(finalPositionX, nextY));
+                            child.setPosition(cc.v2(finalPositionX, nextY));
                         }
                     }
                     var signX = 1;
@@ -28895,11 +28895,11 @@
                     }
                 });
                 if (allChildrenBoundingBox) {
-                    var leftBottomInParentSpace = this.node.parent.convertToNodeSpaceAR(cc.p(allChildrenBoundingBox.x, allChildrenBoundingBox.y));
-                    var rightTopInParentSpace = this.node.parent.convertToNodeSpaceAR(cc.p(allChildrenBoundingBox.x + allChildrenBoundingBox.width, allChildrenBoundingBox.y + allChildrenBoundingBox.height));
+                    var leftBottomInParentSpace = this.node.parent.convertToNodeSpaceAR(cc.v2(allChildrenBoundingBox.x, allChildrenBoundingBox.y));
+                    var rightTopInParentSpace = this.node.parent.convertToNodeSpaceAR(cc.v2(allChildrenBoundingBox.x + allChildrenBoundingBox.width, allChildrenBoundingBox.y + allChildrenBoundingBox.height));
                     var newSize = cc.size(rightTopInParentSpace.x - leftBottomInParentSpace.x, rightTopInParentSpace.y - leftBottomInParentSpace.y);
                     var layoutPosition = this.node.getPosition();
-                    var newAnchor = cc.p((layoutPosition.x - leftBottomInParentSpace.x) / newSize.width, (layoutPosition.y - leftBottomInParentSpace.y) / newSize.height);
+                    var newAnchor = cc.v2((layoutPosition.x - leftBottomInParentSpace.x) / newSize.width, (layoutPosition.y - leftBottomInParentSpace.y) / newSize.height);
                     this.node.setAnchorPoint(newAnchor);
                     this.node.setContentSize(newSize);
                 }
@@ -29164,7 +29164,7 @@
                     if (entity.parent === this.node) {
                         var x = -nodeSize.width * nodeAnchor.x;
                         var y = 0;
-                        entity.setPosition(cc.p(x, y));
+                        entity.setPosition(cc.v2(x, y));
                     }
                 }
             },
@@ -29177,7 +29177,7 @@
                     var entityAnchorPoint = entity.getAnchorPoint();
                     var entitySize = entity.getContentSize();
                     var entityPosition = entity.getPosition();
-                    var anchorPoint = cc.p(0, .5);
+                    var anchorPoint = cc.v2(0, .5);
                     var progress = cc.clamp01(this.progress);
                     var actualLenth = this.totalLength * progress;
                     var finalContentSize;
@@ -29186,7 +29186,7 @@
                     switch (this.mode) {
                       case Mode.HORIZONTAL:
                         if (this.reverse) {
-                            anchorPoint = cc.p(1, .5);
+                            anchorPoint = cc.v2(1, .5);
                         }
                         finalContentSize = cc.size(actualLenth, entitySize.height);
                         totalWidth = this.totalLength;
@@ -29195,9 +29195,9 @@
 
                       case Mode.VERTICAL:
                         if (this.reverse) {
-                            anchorPoint = cc.p(.5, 1);
+                            anchorPoint = cc.v2(.5, 1);
                         } else {
-                            anchorPoint = cc.p(.5, 0);
+                            anchorPoint = cc.v2(.5, 0);
                         }
                         finalContentSize = cc.size(entitySize.width, actualLenth);
                         totalWidth = entitySize.width;
@@ -29213,7 +29213,7 @@
                     if (this.barSprite.type !== cc.Sprite.Type.FILLED) {
                         var anchorOffsetX = anchorPoint.x - entityAnchorPoint.x;
                         var anchorOffsetY = anchorPoint.y - entityAnchorPoint.y;
-                        var finalPosition = cc.p(totalWidth * anchorOffsetX, totalHeight * anchorOffsetY);
+                        var finalPosition = cc.v2(totalWidth * anchorOffsetX, totalHeight * anchorOffsetY);
                         entity.setPosition(cc.pAdd(entityPosition, finalPosition));
                         entity.setAnchorPoint(anchorPoint);
                         entity.setContentSize(finalContentSize);
@@ -29481,7 +29481,7 @@
                     type: cc.Sprite,
                     tooltip: "i18n:COMPONENT.scrollbar.handle",
                     notify: function() {
-                        this._onScroll(cc.p(0, 0));
+                        this._onScroll(cc.v2(0, 0));
                     },
                     animatable: false
                 },
@@ -29490,7 +29490,7 @@
                     type: Direction,
                     tooltip: "i18n:COMPONENT.scrollbar.direction",
                     notify: function() {
-                        this._onScroll(cc.p(0, 0));
+                        this._onScroll(cc.v2(0, 0));
                     },
                     animatable: false
                 },
@@ -29512,7 +29512,7 @@
                 this._scrollView = scrollView;
             },
             _convertToScrollViewSpace: function(content) {
-                var worldSpacePos = content.convertToWorldSpace(cc.p(0, 0));
+                var worldSpacePos = content.convertToWorldSpace(cc.v2(0, 0));
                 var scrollViewSpacePos = this._scrollView.node.convertToNodeSpace(worldSpacePos);
                 return scrollViewSpacePos;
             },
@@ -29571,11 +29571,11 @@
                 var fixupPosition;
                 var handleParent = this.handle.node.parent;
                 if (this.direction === Direction.HORIZONTAL) {
-                    var leftSideWorldPosition = this.node.convertToWorldSpaceAR(cc.p(-barSize.width * barAnchor.x, -barSize.height * barAnchor.y));
+                    var leftSideWorldPosition = this.node.convertToWorldSpaceAR(cc.v2(-barSize.width * barAnchor.x, -barSize.height * barAnchor.y));
                     fixupPosition = handleParent.convertToNodeSpaceAR(leftSideWorldPosition);
                 } else {
                     if (this.direction === Direction.VERTICAL) {
-                        var bottomSideWorldPosition = this.node.convertToWorldSpaceAR(cc.p(-barSize.width * barAnchor.x, -barSize.height * barAnchor.y));
+                        var bottomSideWorldPosition = this.node.convertToWorldSpaceAR(cc.v2(-barSize.width * barAnchor.x, -barSize.height * barAnchor.y));
                         fixupPosition = handleParent.convertToNodeSpaceAR(bottomSideWorldPosition);
                     }
                 }
@@ -29637,16 +29637,16 @@
                 }
                 var position = (scrollViewMeasure - actualLenth) * positionRatio;
                 if (this.direction === Direction.VERTICAL) {
-                    return cc.p(0, position);
+                    return cc.v2(0, position);
                 } else {
-                    return cc.p(position, 0);
+                    return cc.v2(position, 0);
                 }
             },
             _updateLength: function(length) {
                 if (this.handle) {
                     var handleNode = this.handle.node;
                     var handleNodeSize = this.node.getContentSize();
-                    handleNode.setAnchorPoint(cc.p(0, 0));
+                    handleNode.setAnchorPoint(cc.v2(0, 0));
                     if (this.direction === Direction.HORIZONTAL) {
                         handleNode.setContentSize(length, handleNodeSize.height);
                     } else {
@@ -29721,14 +29721,14 @@
                 this._touchMovePreviousTimestamp = 0;
                 this._autoScrolling = false;
                 this._autoScrollAttenuate = false;
-                this._autoScrollStartPosition = cc.p(0, 0);
-                this._autoScrollTargetDelta = cc.p(0, 0);
+                this._autoScrollStartPosition = cc.v2(0, 0);
+                this._autoScrollTargetDelta = cc.v2(0, 0);
                 this._autoScrollTotalTime = 0;
                 this._autoScrollAccumulatedTime = 0;
                 this._autoScrollCurrentlyOutOfBoundary = false;
                 this._autoScrollBraking = false;
-                this._autoScrollBrakingStartPosition = cc.p(0, 0);
-                this._outOfBoundaryAmount = cc.p(0, 0);
+                this._autoScrollBrakingStartPosition = cc.v2(0, 0);
+                this._outOfBoundaryAmount = cc.v2(0, 0);
                 this._outOfBoundaryAmountDirty = true;
                 this._stopMouseWheel = false;
                 this._mouseWheelEventElapsedTime = 0;
@@ -29803,7 +29803,7 @@
             },
             scrollToBottom: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(0, 0),
+                    anchor: cc.v2(0, 0),
                     applyToHorizontal: false,
                     applyToVertical: true
                 });
@@ -29815,7 +29815,7 @@
             },
             scrollToTop: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(0, 1),
+                    anchor: cc.v2(0, 1),
                     applyToHorizontal: false,
                     applyToVertical: true
                 });
@@ -29827,7 +29827,7 @@
             },
             scrollToLeft: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(0, 0),
+                    anchor: cc.v2(0, 0),
                     applyToHorizontal: true,
                     applyToVertical: false
                 });
@@ -29839,7 +29839,7 @@
             },
             scrollToRight: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(1, 0),
+                    anchor: cc.v2(1, 0),
                     applyToHorizontal: true,
                     applyToVertical: false
                 });
@@ -29851,7 +29851,7 @@
             },
             scrollToTopLeft: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(0, 1),
+                    anchor: cc.v2(0, 1),
                     applyToHorizontal: true,
                     applyToVertical: true
                 });
@@ -29863,7 +29863,7 @@
             },
             scrollToTopRight: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(1, 1),
+                    anchor: cc.v2(1, 1),
                     applyToHorizontal: true,
                     applyToVertical: true
                 });
@@ -29875,7 +29875,7 @@
             },
             scrollToBottomLeft: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(0, 0),
+                    anchor: cc.v2(0, 0),
                     applyToHorizontal: true,
                     applyToVertical: true
                 });
@@ -29887,7 +29887,7 @@
             },
             scrollToBottomRight: function(timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(1, 0),
+                    anchor: cc.v2(1, 0),
                     applyToHorizontal: true,
                     applyToVertical: true
                 });
@@ -29899,7 +29899,7 @@
             },
             scrollToPercentHorizontal: function(percent, timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(percent, 0),
+                    anchor: cc.v2(percent, 0),
                     applyToHorizontal: true,
                     applyToVertical: false
                 });
@@ -29923,7 +29923,7 @@
             },
             scrollToPercentVertical: function(percent, timeInSecond, attenuated) {
                 var moveDelta = this._calculateMovePercentDelta({
-                    anchor: cc.p(0, percent),
+                    anchor: cc.v2(0, percent),
                     applyToHorizontal: false,
                     applyToVertical: true
                 });
@@ -29966,16 +29966,16 @@
                 this.node.on(cc.Node.EventType.MOUSE_WHEEL, this._onMouseWheel, this);
             },
             _onMouseWheel: function(event) {
-                var deltaMove = cc.p(0, 0);
+                var deltaMove = cc.v2(0, 0);
                 var wheelPrecision = .025;
                 if (false) {
                     wheelPrecision = 7;
                 }
                 if (this.vertical) {
-                    deltaMove = cc.p(0, event.getScrollY() * wheelPrecision);
+                    deltaMove = cc.v2(0, event.getScrollY() * wheelPrecision);
                 } else {
                     if (this.horizontal) {
-                        deltaMove = cc.p(event.getScrollY() * wheelPrecision, 0);
+                        deltaMove = cc.v2(event.getScrollY() * wheelPrecision, 0);
                     }
                 }
                 this._mouseWheelEventElapsedTime = 0;
@@ -29990,7 +29990,7 @@
             _checkMouseWheel: function(dt) {
                 var currentOutOfBoundary = this._getHowMuchOutOfBoundary();
                 var maxElapsedTime = .1;
-                if (!cc.pFuzzyEqual(currentOutOfBoundary, cc.p(0, 0), EPSILON)) {
+                if (!cc.pFuzzyEqual(currentOutOfBoundary, cc.v2(0, 0), EPSILON)) {
                     this._processInertiaScroll();
                     this.unschedule(this._checkMouseWheel);
                     this._stopMouseWheel = false;
@@ -30008,12 +30008,12 @@
                 var applyToHorizontal = options.applyToHorizontal;
                 var applyToVertical = options.applyToVertical;
                 this._calculateBoundary();
-                anchor = cc.pClamp(anchor, cc.p(0, 0), cc.p(1, 1));
+                anchor = cc.pClamp(anchor, cc.v2(0, 0), cc.v2(1, 1));
                 var scrollSize = this.node.getContentSize();
                 var contentSize = this.content.getContentSize();
                 var bottomDeta = Math.abs(this._getContentBottomBoundary() - this._bottomBoundary);
                 var leftDeta = Math.abs(this._getContentLeftBoundary() - this._leftBoundary);
-                var moveDelta = cc.p(0, 0);
+                var moveDelta = cc.v2(0, 0);
                 if (applyToHorizontal) {
                     moveDelta.x = (contentSize.width - scrollSize.width) * anchor.x - leftDeta;
                 }
@@ -30030,10 +30030,10 @@
                         layout.lateUpdate();
                     }
                     var scrollViewSize = this.node.getContentSize();
-                    var leftBottomPosition = this._convertToContentParentSpace(cc.p(0, 0));
+                    var leftBottomPosition = this._convertToContentParentSpace(cc.v2(0, 0));
                     this._leftBoundary = leftBottomPosition.x;
                     this._bottomBoundary = leftBottomPosition.y;
-                    var topRightPosition = this._convertToContentParentSpace(cc.p(scrollViewSize.width, scrollViewSize.height));
+                    var topRightPosition = this._convertToContentParentSpace(cc.v2(scrollViewSize.width, scrollViewSize.height));
                     this._rightBoundary = topRightPosition.x;
                     this._topBoundary = topRightPosition.y;
                 }
@@ -30181,7 +30181,7 @@
                 }
                 var bounceBackAmount = this._getHowMuchOutOfBoundary();
                 bounceBackAmount = this._clampDelta(bounceBackAmount);
-                if (cc.pFuzzyEqual(bounceBackAmount, cc.p(0, 0), EPSILON)) {
+                if (cc.pFuzzyEqual(bounceBackAmount, cc.v2(0, 0), EPSILON)) {
                     return false;
                 }
                 var bounceBackTime = Math.max(this.bounceDuration, 0);
@@ -30192,7 +30192,7 @@
                 var bounceBackStarted = this._startBounceBackIfNeeded();
                 if (!bounceBackStarted && this.inertia) {
                     var touchMoveVelocity = this._calculateTouchMoveVelocity();
-                    if (!cc.pFuzzyEqual(touchMoveVelocity, cc.p(0, 0), EPSILON) && this.brake < 1) {
+                    if (!cc.pFuzzyEqual(touchMoveVelocity, cc.v2(0, 0), EPSILON) && this.brake < 1) {
                         this._startInertiaScroll(touchMoveVelocity);
                     }
                 }
@@ -30205,7 +30205,7 @@
             },
             _isOutOfBoundary: function() {
                 var outOfBoundary = this._getHowMuchOutOfBoundary();
-                return !cc.pFuzzyEqual(outOfBoundary, cc.p(0, 0), EPSILON);
+                return !cc.pFuzzyEqual(outOfBoundary, cc.v2(0, 0), EPSILON);
             },
             _isNecessaryAutoScrollBrake: function() {
                 if (this._autoScrollBraking) {
@@ -30242,7 +30242,7 @@
                 } else {
                     var moveDelta = cc.pSub(newPosition, this.getContentPosition());
                     var outOfBoundary = this._getHowMuchOutOfBoundary(moveDelta);
-                    if (!cc.pFuzzyEqual(outOfBoundary, cc.p(0, 0), EPSILON)) {
+                    if (!cc.pFuzzyEqual(outOfBoundary, cc.v2(0, 0), EPSILON)) {
                         newPosition = cc.pAdd(newPosition, outOfBoundary);
                         reachedEnd = true;
                     }
@@ -30275,7 +30275,7 @@
                 var totalMoveHeight = contentSize.height - scrollviewSize.height;
                 var attenuatedFactorX = this._calculateAttenuatedFactor(totalMoveWidth);
                 var attenuatedFactorY = this._calculateAttenuatedFactor(totalMoveHeight);
-                targetDelta = cc.p(targetDelta.x * totalMoveWidth * (1 - this.brake) * attenuatedFactorX, targetDelta.y * totalMoveHeight * attenuatedFactorY * (1 - this.brake));
+                targetDelta = cc.v2(targetDelta.x * totalMoveWidth * (1 - this.brake) * attenuatedFactorX, targetDelta.y * totalMoveHeight * attenuatedFactorY * (1 - this.brake));
                 targetDelta = cc.pAdd(deltaMove, targetDelta);
                 var factor = cc.pLength(targetDelta) / originalMoveLength;
                 time *= factor;
@@ -30294,9 +30294,9 @@
                 this._autoScrollTotalTime = timeInSecond;
                 this._autoScrollAccumulatedTime = 0;
                 this._autoScrollBraking = false;
-                this._autoScrollBrakingStartPosition = cc.p(0, 0);
+                this._autoScrollBrakingStartPosition = cc.v2(0, 0);
                 var currentOutOfBoundary = this._getHowMuchOutOfBoundary();
-                if (!cc.pFuzzyEqual(currentOutOfBoundary, cc.p(0, 0), EPSILON)) {
+                if (!cc.pFuzzyEqual(currentOutOfBoundary, cc.v2(0, 0), EPSILON)) {
                     this._autoScrollCurrentlyOutOfBoundary = true;
                     var afterOutOfBoundary = this._getHowMuchOutOfBoundary(adjustedDeltaMove);
                     if (currentOutOfBoundary.x * afterOutOfBoundary.x > 0 || currentOutOfBoundary.y * afterOutOfBoundary.y > 0) {
@@ -30310,13 +30310,13 @@
                     return a + b;
                 }, totalTime);
                 if (totalTime <= 0 || totalTime >= .5) {
-                    return cc.p(0, 0);
+                    return cc.v2(0, 0);
                 }
-                var totalMovement = cc.p(0, 0);
+                var totalMovement = cc.v2(0, 0);
                 totalMovement = this._touchMoveDisplacements.reduce(function(a, b) {
                     return cc.pAdd(a, b);
                 }, totalMovement);
-                return cc.p(totalMovement.x / totalTime, totalMovement.y / totalTime);
+                return cc.v2(totalMovement.x / totalTime, totalMovement.y / totalTime);
             },
             _flattenVectorByDirection: function(vector) {
                 var result = vector;
@@ -30353,11 +30353,11 @@
                 return bottomBoundary;
             },
             _getHowMuchOutOfBoundary: function(addition) {
-                addition = addition || cc.p(0, 0);
-                if (cc.pFuzzyEqual(addition, cc.p(0, 0), EPSILON) && !this._outOfBoundaryAmountDirty) {
+                addition = addition || cc.v2(0, 0);
+                if (cc.pFuzzyEqual(addition, cc.v2(0, 0), EPSILON) && !this._outOfBoundaryAmountDirty) {
                     return this._outOfBoundaryAmount;
                 }
-                var outOfBoundaryAmount = cc.p(0, 0);
+                var outOfBoundaryAmount = cc.v2(0, 0);
                 if (this._getContentLeftBoundary() + addition.x > this._leftBoundary) {
                     outOfBoundaryAmount.x = this._leftBoundary - (this._getContentLeftBoundary() + addition.x);
                 } else {
@@ -30372,7 +30372,7 @@
                         outOfBoundaryAmount.y = this._bottomBoundary - (this._getContentBottomBoundary() + addition.y);
                     }
                 }
-                if (cc.pFuzzyEqual(addition, cc.p(0, 0), EPSILON)) {
+                if (cc.pFuzzyEqual(addition, cc.v2(0, 0), EPSILON)) {
                     this._outOfBoundaryAmount = outOfBoundaryAmount;
                     this._outOfBoundaryAmountDirty = false;
                 }
@@ -32600,10 +32600,10 @@
             },
             setTouchInfo: function(id, x, y) {
                 this._prevPoint = this._point;
-                this._point = cc.p(x || 0, y || 0);
+                this._point = cc.v2(x || 0, y || 0);
                 this._id = id;
                 if (!this._startPointCaptured) {
-                    this._startPoint = cc.p(this._point);
+                    this._startPoint = cc.v2(this._point);
                     this._startPointCaptured = true;
                 }
             },
@@ -32618,9 +32618,9 @@
             },
             _setPrevPoint: function(x, y) {
                 if (void 0 === y) {
-                    this._prevPoint = cc.p(x.x, x.y);
+                    this._prevPoint = cc.v2(x.x, x.y);
                 } else {
-                    this._prevPoint = cc.p(x || 0, y || 0);
+                    this._prevPoint = cc.v2(x || 0, y || 0);
                 }
             }
         });
@@ -35523,8 +35523,8 @@
         var inputManager = {
             _mousePressed: false,
             _isRegisterEvent: false,
-            _preTouchPoint: cc.p(0, 0),
-            _prevMousePoint: cc.p(0, 0),
+            _preTouchPoint: cc.v2(0, 0),
+            _prevMousePoint: cc.v2(0, 0),
             _preTouchPool: [],
             _preTouchPoolPointer: 0,
             _touches: [],
@@ -36162,7 +36162,7 @@
             SELECTED_TAG: 8802,
             DISABLE_TAG: 8803,
             FIX_ARTIFACTS_BY_STRECHING_TEXEL: 0,
-            DIRECTOR_STATS_POSITION: cc.p(0, 0),
+            DIRECTOR_STATS_POSITION: cc.v2(0, 0),
             DIRECTOR_FPS_INTERVAL: .5,
             COCOSNODE_RENDER_SUBPIXEL: 1,
             SPRITEBATCHNODE_RENDER_SUBPIXEL: 1,
@@ -37329,10 +37329,10 @@
                 return cc.size(this._visibleRect.width * this._scaleX, this._visibleRect.height * this._scaleY);
             },
             getVisibleOrigin: function() {
-                return cc.p(this._visibleRect.x, this._visibleRect.y);
+                return cc.v2(this._visibleRect.x, this._visibleRect.y);
             },
             getVisibleOriginInPixel: function() {
-                return cc.p(this._visibleRect.x * this._scaleX, this._visibleRect.y * this._scaleY);
+                return cc.v2(this._visibleRect.x * this._scaleX, this._visibleRect.y * this._scaleY);
             },
             canSetContentScaleFactor: function() {
                 return true;
@@ -37700,15 +37700,15 @@
     }, {} ],
     108: [ function(require, module, exports) {
         cc.visibleRect = {
-            topLeft: cc.p(0, 0),
-            topRight: cc.p(0, 0),
-            top: cc.p(0, 0),
-            bottomLeft: cc.p(0, 0),
-            bottomRight: cc.p(0, 0),
-            bottom: cc.p(0, 0),
-            center: cc.p(0, 0),
-            left: cc.p(0, 0),
-            right: cc.p(0, 0),
+            topLeft: cc.v2(0, 0),
+            topRight: cc.v2(0, 0),
+            top: cc.v2(0, 0),
+            bottomLeft: cc.v2(0, 0),
+            bottomRight: cc.v2(0, 0),
+            bottom: cc.v2(0, 0),
+            center: cc.v2(0, 0),
+            left: cc.v2(0, 0),
+            right: cc.v2(0, 0),
             width: 0,
             height: 0,
             init: function(visibleRect) {
@@ -40207,9 +40207,9 @@
             _pointFromString: function(content) {
                 var result = this._CCNS_REG1.exec(content);
                 if (!result) {
-                    return cc.p(0, 0);
+                    return cc.v2(0, 0);
                 }
-                return cc.p(parseFloat(result[1]), parseFloat(result[2]));
+                return cc.v2(parseFloat(result[1]), parseFloat(result[2]));
             },
             _sizeFromString: function(content) {
                 var result = this._CCNS_REG1.exec(content);
@@ -40252,7 +40252,7 @@
                     if (0 == format) {
                         tempFrame.rect = cc.rect(frameDict["x"], frameDict["y"], frameDict["width"], frameDict["height"]);
                         tempFrame.rotated = false;
-                        tempFrame.offset = cc.p(frameDict["offsetX"], frameDict["offsetY"]);
+                        tempFrame.offset = cc.v2(frameDict["offsetX"], frameDict["offsetY"]);
                         var ow = frameDict["originalWidth"];
                         var oh = frameDict["originalHeight"];
                         if (!ow || !oh) {
@@ -40284,7 +40284,7 @@
                                 key = frameDict["filename"] || key;
                                 tempFrame.rect = cc.rect(tmpFrame["x"], tmpFrame["y"], tmpFrame["w"], tmpFrame["h"]);
                                 tempFrame.rotated = frameDict["rotated"] || false;
-                                tempFrame.offset = cc.p(0, 0);
+                                tempFrame.offset = cc.v2(0, 0);
                                 tempFrame.size = cc.size(tmpSourceSize["w"], tmpSourceSize["h"]);
                             }
                         }
@@ -42024,14 +42024,14 @@
                 _color: cc.Color.WHITE,
                 _cascadeOpacityEnabled: true,
                 _parent: null,
-                _anchorPoint: cc.p(.5, .5),
+                _anchorPoint: cc.v2(.5, .5),
                 _contentSize: cc.size(0, 0),
                 _children: [],
                 _rotationX: 0,
                 _rotationY: 0,
                 _scaleX: 1,
                 _scaleY: 1,
-                _position: cc.p(0, 0),
+                _position: cc.v2(0, 0),
                 _skewX: 0,
                 _skewY: 0,
                 _localZOrder: 0,
@@ -42463,7 +42463,7 @@
                 }
             },
             getPosition: function() {
-                return cc.p(this._position);
+                return cc.v2(this._position);
             },
             setPosition: function(newPosOrxValue, yValue) {
                 var xValue;
@@ -42495,7 +42495,7 @@
                 }
             },
             getAnchorPoint: function() {
-                return cc.p(this._anchorPoint);
+                return cc.v2(this._anchorPoint);
             },
             setAnchorPoint: function(point, y) {
                 var locAnchorPoint = this._anchorPoint;
@@ -42738,14 +42738,14 @@
                     cc.director._visitScene();
                 }
                 var nodePositionIgnoreAnchorPoint = this._sgNode.convertToNodeSpace(worldPoint);
-                return cc.pAdd(nodePositionIgnoreAnchorPoint, cc.p(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
+                return cc.pAdd(nodePositionIgnoreAnchorPoint, cc.v2(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
             },
             convertToWorldSpace: function(nodePoint) {
                 if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
                     cc.director._visitScene();
                 }
                 var worldPositionIgnoreAnchorPoint = this._sgNode.convertToWorldSpace(nodePoint);
-                return cc.pSub(worldPositionIgnoreAnchorPoint, cc.p(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
+                return cc.pSub(worldPositionIgnoreAnchorPoint, cc.v2(this._anchorPoint.x * this._contentSize.width, this._anchorPoint.y * this._contentSize.height));
             },
             convertToNodeSpaceAR: function(worldPoint) {
                 if (cc._renderType === cc.game.RENDER_TYPE_CANVAS) {
@@ -43713,16 +43713,16 @@
     142: [ function(require, module, exports) {
         var POINT_EPSILON = parseFloat("1.192092896e-07F");
         cc.pNeg = function(point) {
-            return cc.p(-point.x, -point.y);
+            return cc.v2(-point.x, -point.y);
         };
         cc.pAdd = function(v1, v2) {
-            return cc.p(v1.x + v2.x, v1.y + v2.y);
+            return cc.v2(v1.x + v2.x, v1.y + v2.y);
         };
         cc.pSub = function(v1, v2) {
-            return cc.p(v1.x - v2.x, v1.y - v2.y);
+            return cc.v2(v1.x - v2.x, v1.y - v2.y);
         };
         cc.pMult = function(point, floatVar) {
-            return cc.p(point.x * floatVar, point.y * floatVar);
+            return cc.v2(point.x * floatVar, point.y * floatVar);
         };
         cc.pMidpoint = function(v1, v2) {
             return cc.pMult(cc.pAdd(v1, v2), .5);
@@ -43734,10 +43734,10 @@
             return v1.x * v2.y - v1.y * v2.x;
         };
         cc.pPerp = function(point) {
-            return cc.p(-point.y, point.x);
+            return cc.v2(-point.y, point.x);
         };
         cc.pRPerp = function(point) {
-            return cc.p(point.y, -point.x);
+            return cc.v2(point.y, -point.x);
         };
         cc.pProject = function(v1, v2) {
             return cc.pMult(v2, cc.pDot(v1, v2) / cc.pDot(v2, v2));
@@ -43756,10 +43756,10 @@
         };
         cc.pNormalize = function(v) {
             var n = cc.pLength(v);
-            return 0 === n ? cc.p(v) : cc.pMult(v, 1 / n);
+            return 0 === n ? cc.v2(v) : cc.pMult(v, 1 / n);
         };
         cc.pForAngle = function(a) {
-            return cc.p(Math.cos(a), Math.sin(a));
+            return cc.v2(Math.cos(a), Math.sin(a));
         };
         cc.pToAngle = function(v) {
             return Math.atan2(v.y, v.x);
@@ -43776,13 +43776,13 @@
             return value < 0 ? 0 : value < 1 ? value : 1;
         };
         cc.pClamp = function(p, min_inclusive, max_inclusive) {
-            return cc.p(cc.clampf(p.x, min_inclusive.x, max_inclusive.x), cc.clampf(p.y, min_inclusive.y, max_inclusive.y));
+            return cc.v2(cc.clampf(p.x, min_inclusive.x, max_inclusive.x), cc.clampf(p.y, min_inclusive.y, max_inclusive.y));
         };
         cc.pFromSize = function(s) {
-            return cc.p(s.width, s.height);
+            return cc.v2(s.width, s.height);
         };
         cc.pCompOp = function(p, opFunc) {
-            return cc.p(opFunc(p.x), opFunc(p.y));
+            return cc.v2(opFunc(p.x), opFunc(p.y));
         };
         cc.pLerp = function(a, b, alpha) {
             return cc.pAdd(cc.pMult(a, 1 - alpha), cc.pMult(b, alpha));
@@ -43796,7 +43796,7 @@
             return false;
         };
         cc.pCompMult = function(a, b) {
-            return cc.p(a.x * b.x, a.y * b.y);
+            return cc.v2(a.x * b.x, a.y * b.y);
         };
         cc.pAngleSigned = function(a, b) {
             var a2 = cc.pNormalize(a);
@@ -43846,7 +43846,7 @@
             return true;
         };
         cc.pSegmentIntersect = function(A, B, C, D) {
-            var retP = cc.p(0, 0);
+            var retP = cc.v2(0, 0);
             if (cc.pLineIntersect(A, B, C, D, retP)) {
                 if (retP.x >= 0 && retP.x <= 1 && retP.y >= 0 && retP.y <= 1) {
                     return true;
@@ -43855,14 +43855,14 @@
             return false;
         };
         cc.pIntersectPoint = function(A, B, C, D) {
-            var retP = cc.p(0, 0);
+            var retP = cc.v2(0, 0);
             if (cc.pLineIntersect(A, B, C, D, retP)) {
-                var P = cc.p(0, 0);
+                var P = cc.v2(0, 0);
                 P.x = A.x + retP.x * (B.x - A.x);
                 P.y = A.y + retP.x * (B.y - A.y);
                 return P;
             }
-            return cc.p(0, 0);
+            return cc.v2(0, 0);
         };
         cc.pSameAs = function(A, B) {
             if (null != A && null != B) {
@@ -47730,11 +47730,11 @@
                 startSpinVar: 0,
                 endSpin: 0,
                 endSpinVar: 0,
-                sourcePos: cc.p(0, 0),
-                posVar: cc.p(0, 0),
+                sourcePos: cc.v2(0, 0),
+                posVar: cc.v2(0, 0),
                 positionType: PositionType.FREE,
                 emitterMode: EmitterMode.GRAVITY,
-                gravity: cc.p(0, 0),
+                gravity: cc.v2(0, 0),
                 speed: 180,
                 speedVar: 50,
                 tangentialAccel: 80,
@@ -49306,7 +49306,7 @@
             getPositionAt: function(pos, y) {
                 if (this._sgNode) {
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     return this._sgNode.getPositionAt(pos);
                 }
@@ -49315,7 +49315,7 @@
             removeTileAt: function(pos, y) {
                 if (this._sgNode) {
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     this._sgNode.removeTileAt(pos);
                 }
@@ -49327,7 +49327,7 @@
                     }
                     var pos;
                     if (void 0 !== flags) {
-                        pos = cc.p(posOrX, flagsOrY);
+                        pos = cc.v2(posOrX, flagsOrY);
                     } else {
                         pos = posOrX;
                         flags = flagsOrY;
@@ -49338,7 +49338,7 @@
             getTileGIDAt: function(pos, y) {
                 if (this._sgNode) {
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     return this._sgNode.getTileGIDAt(pos);
                 }
@@ -49347,7 +49347,7 @@
             getTileAt: function(pos, y) {
                 if (this._sgNode) {
                     if (void 0 !== y) {
-                        pos = cc.p(pos, y);
+                        pos = cc.v2(pos, y);
                     }
                     return this._sgNode.getTileAt(pos);
                 }
@@ -50477,10 +50477,10 @@
             var vertices = {}, VERTEX = sp.VERTEX_INDEX, bone = slot.bone;
             attachment.computeVertices(bone.skeleton.x, bone.skeleton.y, bone, vertices);
             points.length = 0;
-            points.push(cc.p(vertices[VERTEX.X1], vertices[VERTEX.Y1]));
-            points.push(cc.p(vertices[VERTEX.X4], vertices[VERTEX.Y4]));
-            points.push(cc.p(vertices[VERTEX.X3], vertices[VERTEX.Y3]));
-            points.push(cc.p(vertices[VERTEX.X2], vertices[VERTEX.Y2]));
+            points.push(cc.v2(vertices[VERTEX.X1], vertices[VERTEX.Y1]));
+            points.push(cc.v2(vertices[VERTEX.X4], vertices[VERTEX.Y4]));
+            points.push(cc.v2(vertices[VERTEX.X3], vertices[VERTEX.Y3]));
+            points.push(cc.v2(vertices[VERTEX.X2], vertices[VERTEX.Y2]));
         };
         proto._createChildFormSkeletonData = function() {
             var node = this._node;
@@ -50695,10 +50695,10 @@
                         attachment = slot.attachment;
                         this._updateRegionAttachmentQuad(attachment, slot, tmpQuad);
                         var points = [];
-                        points.push(cc.p(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y));
-                        points.push(cc.p(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y));
-                        points.push(cc.p(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y));
-                        points.push(cc.p(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y));
+                        points.push(cc.v2(tmpQuad.bl.vertices.x, tmpQuad.bl.vertices.y));
+                        points.push(cc.v2(tmpQuad.br.vertices.x, tmpQuad.br.vertices.y));
+                        points.push(cc.v2(tmpQuad.tr.vertices.x, tmpQuad.tr.vertices.y));
+                        points.push(cc.v2(tmpQuad.tl.vertices.x, tmpQuad.tl.vertices.y));
                         drawingUtil.drawPoly(points, 4, true);
                     }
                 }
@@ -50710,13 +50710,13 @@
                         bone = locSkeleton.bones[i];
                         var x = bone.data.length * bone.m00 + bone.worldX;
                         var y = bone.data.length * bone.m10 + bone.worldY;
-                        drawingUtil.drawLine(cc.p(bone.worldX, bone.worldY), cc.p(x, y));
+                        drawingUtil.drawLine(cc.v2(bone.worldX, bone.worldY), cc.v2(x, y));
                     }
                     drawingUtil.setPointSize(4);
                     drawingUtil.setDrawColor(0, 0, 255, 255);
                     for (i = 0, n = locSkeleton.bones.length; i < n; i++) {
                         bone = locSkeleton.bones[i];
-                        drawingUtil.drawPoint(cc.p(bone.worldX, bone.worldY));
+                        drawingUtil.drawPoint(cc.v2(bone.worldX, bone.worldY));
                         if (0 == i) {
                             drawingUtil.setDrawColor(0, 255, 0, 255);
                         }

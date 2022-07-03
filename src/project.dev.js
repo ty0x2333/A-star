@@ -215,28 +215,28 @@ cc.Class({
         var hasRight = false;
 
         // top
-        var top = cc.p(position.x, position.y - 1);
+        var top = cc.v2(position.x, position.y - 1);
         if (this._layerBarrier.getTileGIDAt(top) === 0) {
             // cc.log('top: ' + top);
             results.push(top);
             hasTop = true;
         }
         // bottom
-        var bottom = cc.p(position.x, position.y + 1);
+        var bottom = cc.v2(position.x, position.y + 1);
         if (this._layerBarrier.getTileGIDAt(bottom) === 0) {
             // cc.log('bottom: ' + bottom);
             results.push(bottom);
             hasBottom = true;
         }
         // left
-        var left = cc.p(position.x - 1, position.y);
+        var left = cc.v2(position.x - 1, position.y);
         if (this._layerBarrier.getTileGIDAt(left) === 0) {
             // cc.log('left: ' + left);
             results.push(left);
             hasLeft = true;
         }
         // right
-        var right = cc.p(position.x + 1, position.y);
+        var right = cc.v2(position.x + 1, position.y);
         if (this._layerBarrier.getTileGIDAt(right) === 0) {
             // cc.log('right: ' + right);
             results.push(right);
@@ -245,7 +245,7 @@ cc.Class({
 
         if (this.moveType == AStarMoveType.EIGHT_DIRECTION) {
             // Top Left
-            var topLeft = cc.p(position.x - 1, position.y - 1);
+            var topLeft = cc.v2(position.x - 1, position.y - 1);
             if (hasTop && hasLeft) {
                 if (this._layerBarrier.getTileGIDAt(topLeft) === 0) {
                     // cc.log('top left: ' + topLeft);
@@ -253,7 +253,7 @@ cc.Class({
                 }
             }
             // Top Right
-            var topRight = cc.p(position.x + 1, position.y - 1);
+            var topRight = cc.v2(position.x + 1, position.y - 1);
             if (hasTop && hasRight) {
                 if (this._layerBarrier.getTileGIDAt(topRight) === 0) {
                     // cc.log('top right: ' + topRight);
@@ -261,7 +261,7 @@ cc.Class({
                 }
             }
             // Bottom Left
-            var bottomLeft = cc.p(position.x - 1, position.y + 1);
+            var bottomLeft = cc.v2(position.x - 1, position.y + 1);
             if (hasBottom && hasLeft) {
                 if (this._layerBarrier.getTileGIDAt(bottomLeft) === 0) {
                     // cc.log('bttom left: ' + bottomLeft);
@@ -269,7 +269,7 @@ cc.Class({
                 }
             }
             // Bottom Right
-            var bottomRight = cc.p(position.x + 1, position.y + 1);
+            var bottomRight = cc.v2(position.x + 1, position.y + 1);
             if (hasBottom && hasRight) {
                 if (this._layerBarrier.getTileGIDAt(bottomRight) === 0) {
                     // cc.log('top right: ' + bottomRight);
@@ -440,7 +440,7 @@ cc.Class({
 
         if (index !== undefined) {
             // let label = new cc.LabelTTF(index.toString(), 'Arial', 12);
-            // label.setPosition(cc.p(touchTile.width / 2, touchTile.height / 2));
+            // label.setPosition(cc.v2(touchTile.width / 2, touchTile.height / 2));
             // touchTile.addChild(label, 10);
         }
     },
@@ -451,7 +451,7 @@ cc.Class({
         var x = Math.floor(pixelPosition.x / tileSize.width);
         var y = Math.floor((mapSize.height - pixelPosition.y) / tileSize.height);
 
-        return cc.p(x, y);
+        return cc.v2(x, y);
     }
 });
 

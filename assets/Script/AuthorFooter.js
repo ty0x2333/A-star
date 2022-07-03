@@ -1,4 +1,4 @@
-let gitHubUser = 'luckytianyiyan';
+let gitHubUser = 'ty0x2333';
 let gitHubRepoName = 'A-star';
 let gitHubPrefix = 'https://github.com/';
 cc.Class({

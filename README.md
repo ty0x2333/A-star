@@ -1,12 +1,12 @@
 # A star
 A\* search algorithm for Cocos Creator.
 
-[![license](https://img.shields.io/github/license/luckytianyiyan/A-star.svg)](LICENSE.md)
+[![license](https://img.shields.io/github/license/ty0x2333/A-star.svg)](LICENSE.md)
 
 a component for the TiledMap to add A star search algorithm support.:beers:
 
 Here you can see the running effect:
-[Online Demo](http://luckytianyiyan.github.io/A-star/)
+[Online Demo](https://ty0x2333.github.io/A-star/)
 
 ## Dependencies
 

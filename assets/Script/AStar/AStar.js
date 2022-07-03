@@ -143,28 +143,28 @@ cc.Class({
         let hasRight = false;
         
         // top
-        let top = cc.p(position.x, position.y - 1);
+        let top = cc.v2(position.x, position.y - 1);
         if (this._layerBarrier.getTileGIDAt(top) === 0) {
             // cc.log('top: ' + top);
             results.push(top);
             hasTop = true;
         }
         // bottom
-        let bottom = cc.p(position.x, position.y + 1);
+        let bottom = cc.v2(position.x, position.y + 1);
         if (this._layerBarrier.getTileGIDAt(bottom) === 0) {
             // cc.log('bottom: ' + bottom);
             results.push(bottom);
             hasBottom = true;
         }
         // left
-        let left = cc.p(position.x - 1, position.y);
+        let left = cc.v2(position.x - 1, position.y);
         if (this._layerBarrier.getTileGIDAt(left) === 0) {
             // cc.log('left: ' + left);
             results.push(left);
             hasLeft = true;
         }
         // right
-        let right = cc.p(position.x + 1, position.y);
+        let right = cc.v2(position.x + 1, position.y);
         if (this._layerBarrier.getTileGIDAt(right) === 0) {
             // cc.log('right: ' + right);
             results.push(right);
@@ -173,7 +173,7 @@ cc.Class({
         
         if (this.moveType == AStarMoveType.EIGHT_DIRECTION) {
             // Top Left
-            let topLeft = cc.p(position.x - 1, position.y - 1);
+            let topLeft = cc.v2(position.x - 1, position.y - 1);
             if (hasTop && hasLeft) {
                 if (this._layerBarrier.getTileGIDAt(topLeft) === 0) {
                     // cc.log('top left: ' + topLeft);
@@ -181,7 +181,7 @@ cc.Class({
                 }
             }
             // Top Right
-            let topRight = cc.p(position.x + 1, position.y - 1);
+            let topRight = cc.v2(position.x + 1, position.y - 1);
             if (hasTop && hasRight) {
                 if (this._layerBarrier.getTileGIDAt(topRight) === 0) {
                     // cc.log('top right: ' + topRight);
@@ -189,7 +189,7 @@ cc.Class({
                 }
             }
             // Bottom Left
-            let bottomLeft = cc.p(position.x - 1, position.y + 1);
+            let bottomLeft = cc.v2(position.x - 1, position.y + 1);
             if (hasBottom && hasLeft) {
                 if (this._layerBarrier.getTileGIDAt(bottomLeft) === 0) {
                     // cc.log('bttom left: ' + bottomLeft);
@@ -197,7 +197,7 @@ cc.Class({
                 }
             }
             // Bottom Right
-            let bottomRight = cc.p(position.x + 1, position.y + 1);
+            let bottomRight = cc.v2(position.x + 1, position.y + 1);
             if (hasBottom && hasRight) {
                 if (this._layerBarrier.getTileGIDAt(bottomRight) === 0) {
                     // cc.log('top right: ' + bottomRight);

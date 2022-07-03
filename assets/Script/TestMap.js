@@ -104,9 +104,10 @@ cc.Class({
     
     _clearDebugColor: function(sender) {
         for (let i = 0; i < this._paths.length; ++i) {
-            let touchTile = this._layerFloor.getTileAt(this._paths[i]);
-            touchTile.color = cc.Color.WHITE;
-            touchTile.removeAllChildren();
+            let position = this._paths[i];
+            let touchTile = this._layerFloor.getTiledTileAt(position.x, position.y, true);
+            touchTile.node.color = cc.Color.WHITE;
+            // touchTile.removeAllChildren();
         }
     },
     
@@ -115,12 +116,13 @@ cc.Class({
             return;
         }
         
-        let touchTile = this._layerFloor.getTileAt(tilePosition);
-        touchTile.color = color;
+        let touchTile = this._layerFloor.getTiledTileAt(tilePosition.x, tilePosition.y, true);
+        cc.log(touchTile)
+        touchTile.node.color = color;
         
         if (index !== undefined) {
             // let label = new cc.LabelTTF(index.toString(), 'Arial', 12);
-            // label.setPosition(cc.p(touchTile.width / 2, touchTile.height / 2));
+            // label.setPosition(cc.v2(touchTile.width / 2, touchTile.height / 2));
             // touchTile.addChild(label, 10);
         }
     },
@@ -131,6 +133,6 @@ cc.Class({
         let x = Math.floor(pixelPosition.x / tileSize.width);
         let y = Math.floor((mapSize.height - pixelPosition.y) / tileSize.height);
 
-        return cc.p(x, y);
+        return cc.v2(x, y);
     },
 });

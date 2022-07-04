@@ -7,7 +7,7 @@
 
   <!--http://www.html5rocks.com/en/mobile/mobifying/-->
   <meta name="viewport"
-        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1,target-densitydpi=device-dpi"/>
+        content="width=device-width,user-scalable=no,initial-scale=1, minimum-scale=1,maximum-scale=1"/>
 
   <!--https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html-->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -30,14 +30,15 @@
   <meta name="screen-orientation" content="landscape"/>
   <meta name="x5-orientation" content="landscape">
 
-  <meta name="browsermode" content="application">
+  <!--fix fireball/issues/3568 -->
+  <!--<meta name="browsermode" content="application">-->
   <meta name="x5-page-mode" content="app">
 
   <!--<link rel="apple-touch-icon" href=".png" />-->
   <!--<link rel="apple-touch-icon-precomposed" href=".png" />-->
 
-  <link rel="stylesheet" type="text/css" href="style-mobile.css"/>
-
+  <link rel="stylesheet" type="text/css" href="style-mobile.25fc5.css"/>
+  <link rel="icon" href="favicon.8de18.ico"/>
 </head>
 <body>
   <canvas id="GameCanvas" oncontextmenu="event.preventDefault()" tabindex="0"></canvas>
@@ -46,8 +47,44 @@
       <span style="width: 0%"></span>
     </div>
   </div>
-<script src="src/settings.js" charset="utf-8"></script>
-<script src="cocos2d-js.js" charset="utf-8"></script>
-<script src="main.js" charset="utf-8"></script>
+
+<script src="src/settings.524a4.js" charset="utf-8"></script>
+
+<script src="main.54007.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+(function () {
+    // open web debugger console
+    if (typeof VConsole !== 'undefined') {
+        window.vConsole = new VConsole();
+    }
+
+    var debug = window._CCSettings.debug;
+    var splash = document.getElementById('splash');
+    splash.style.display = 'block';
+
+    function loadScript (moduleName, cb) {
+      function scriptLoaded () {
+          document.body.removeChild(domScript);
+          domScript.removeEventListener('load', scriptLoaded, false);
+          cb && cb();
+      };
+      var domScript = document.createElement('script');
+      domScript.async = true;
+      domScript.src = moduleName;
+      domScript.addEventListener('load', scriptLoaded, false);
+      document.body.appendChild(domScript);
+    }
+
+    loadScript(debug ? 'cocos2d-js.js' : 'cocos2d-js-min.c3ff4.js', function () {
+      if (CC_PHYSICS_BUILTIN || CC_PHYSICS_CANNON) {
+        loadScript(debug ? 'physics.js' : 'physics-min.js', window.boot);
+      }
+      else {
+        window.boot();
+      }
+    });
+})();
+</script>
 </body>
 </html>
